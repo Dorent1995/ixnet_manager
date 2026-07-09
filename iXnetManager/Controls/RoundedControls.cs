@@ -58,7 +58,11 @@ namespace iXnetManager.Controls
                     _wiredButtons.Remove(button);
                 };
 
-                ApplyRoundedRegion(button, 8);
+                // Deliberately NOT rounding corners here: Control.Region is
+                // a hard pixel mask with no anti-aliasing, so "rounded"
+                // corners came out visibly jagged/staircase-shaped. Flat
+                // rectangular buttons with flat colors read as clean and
+                // modern without that artifact.
             }
         }
 

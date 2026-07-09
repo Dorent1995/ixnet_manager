@@ -183,19 +183,56 @@ namespace iXnetManager.Controls
         private static void StyleTabControl(TabControl tab)
         {
             tab.DrawMode = TabDrawMode.OwnerDrawFixed;
-
-            // Deliberately NOT SizeMode.Fixed: a single fixed width for all
-            // tabs either clips/wraps long labels ("iXnet Manager Settings")
-            // or wastes space on short ones ("Logs"). Normal sizing lets the
-            // native tab strip measure each tab against its own Font/Text,
-            // same as before this control was owner-drawn - only colors and
-            // the accent underline are custom, layout is untouched.
+            tab.SizeMode = TabSizeMode.Fixed;
             tab.Padding = new Point(16, 6);
 
+            RecomputeTabItemSize(tab);
+
             // -= before += so repeated Apply() calls (theme toggles) never
-            // stack duplicate handlers.
+            // stack duplicate handlers, and so the fixed width keeps filling
+            // the strip (no leftover native-colored gap) if the form/tab
+            // control is resized later.
+            tab.Resize -= TabControl_Resize;
+            tab.Resize += TabControl_Resize;
             tab.DrawItem -= TabControl_DrawItem;
             tab.DrawItem += TabControl_DrawItem;
+        }
+
+        private static void TabControl_Resize(object sender, EventArgs e)
+        {
+            RecomputeTabItemSize((TabControl)sender);
+        }
+
+        /// <summary>
+        /// Picks a single tab width that (a) is wide enough that even the
+        /// longest tab label never wraps to two lines, and (b) fills the
+        /// entire header strip so there is no left-over sliver of
+        /// un-owner-drawn (native, light-colored) background visible after
+        /// the last tab.
+        /// </summary>
+        private static void RecomputeTabItemSize(TabControl tab)
+        {
+            if (tab.TabPages.Count == 0 || tab.Width <= 0)
+                return;
+
+            using (Font tabFont = AppFonts.Semibold(9f))
+            {
+                int maxTextWidth = 0;
+                foreach (TabPage page in tab.TabPages)
+                {
+                    Size measured = TextRenderer.MeasureText(page.Text, tabFont);
+                    if (measured.Width > maxTextWidth)
+                        maxTextWidth = measured.Width;
+                }
+
+                int minItemWidth = maxTextWidth + tab.Padding.X * 2 + 10;
+                int evenWidth = tab.Width / tab.TabPages.Count;
+                int itemWidth = Math.Max(minItemWidth, evenWidth);
+
+                Size current = tab.ItemSize;
+                if (current.Width != itemWidth || current.Height != 32)
+                    tab.ItemSize = new Size(itemWidth, 32);
+            }
         }
 
         private static void TabControl_DrawItem(object sender, DrawItemEventArgs e)
