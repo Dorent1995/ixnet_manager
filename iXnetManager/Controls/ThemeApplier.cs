@@ -71,7 +71,15 @@ namespace iXnetManager.Controls
                 return; // these paint themselves fully based on ThemeManager.Current
 
             ThemePalette p = ThemeManager.Current;
-            c.Font = AppFonts.Rescale(c.Font);
+
+            // ListView/ObjectListView can cache row height from the Font
+            // that was active when the control's handle was created;
+            // reassigning Font afterwards has been observed to leave the
+            // header/first row visually out of sync with the rest of the
+            // list. Their design-time font already looks fine, so we only
+            // touch their colors below, not the font.
+            if (!(c is ListView))
+                c.Font = AppFonts.Rescale(c.Font);
 
             if (c is Button)
             {

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using iXnetManager.Theme;
 
@@ -130,6 +131,45 @@ namespace iXnetManager.Controls
             _hoverButtonIndex = -1;
             _themeHover = false;
             Invalidate();
+        }
+
+        [DllImport("user32.dll")]
+        private static extern bool ReleaseCapture();
+
+        [DllImport("user32.dll")]
+        private static extern int SendMessage(IntPtr hWnd, int msg, int wParam, int lParam);
+
+        private const int WM_NCLBUTTONDOWN = 0xA1;
+        private const int HTCAPTION = 0x2;
+
+        protected override void OnMouseDown(MouseEventArgs e)
+        {
+            base.OnMouseDown(e);
+
+            if (e.Button != MouseButtons.Left)
+                return;
+
+            // Buttons/theme toggle handle their own click in OnMouseClick -
+            // don't start a window drag on top of them.
+            if (HitTestButton(e.Location))
+                return;
+
+            if (e.Clicks >= 2 && _showMaximize)
+            {
+                _owner.WindowState = _owner.WindowState == FormWindowState.Maximized
+                    ? FormWindowState.Normal
+                    : FormWindowState.Maximized;
+                return;
+            }
+
+            // Dragging a child control's own window handle would only move
+            // the title bar strip within its parent, not the actual Form -
+            // so instead we tell Windows the mouse-down happened on the
+            // PARENT FORM's caption, which makes the OS run its normal
+            // native window-drag loop (also gets Aero Snap for free). This
+            // is the standard, reliable technique for custom title bars.
+            ReleaseCapture();
+            SendMessage(_owner.Handle, WM_NCLBUTTONDOWN, HTCAPTION, 0);
         }
 
         protected override void OnMouseClick(MouseEventArgs e)

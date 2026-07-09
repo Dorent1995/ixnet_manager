@@ -13,6 +13,12 @@ namespace iXnetManager
         [STAThread]
         static void Main()
         {
+            // Must be the very first call: without this the app is not
+            // marked DPI-aware, so on scaled displays Windows renders it
+            // at 96 DPI and then bitmap-stretches the result to fit -
+            // which is what causes blurry text and oversized controls.
+            try { Application.SetHighDpiMode(HighDpiMode.SystemAware); } catch { }
+
             AppDomain.CurrentDomain.UnhandledException += (s, e) =>
             {
                 try
