@@ -298,6 +298,18 @@ namespace iXnetManager.Controls
             olv.Resize -= ObjectListView_Resize;
             olv.Resize += ObjectListView_Resize;
             FillLastColumn(olv);
+
+            // Also defer one more pass to after the current layout/message
+            // cycle: this runs while the owning form is still mid-construction
+            // (right after InstallChrome), and the OLV's header/scrollbar
+            // metrics aren't always settled to their final values yet at
+            // that exact point, which was leaving the last column sized
+            // for a narrower, not-yet-final width.
+            if (olv.IsHandleCreated)
+            {
+                ObjectListView captured = olv;
+                olv.BeginInvoke(new MethodInvoker(delegate { FillLastColumn(captured); }));
+            }
         }
 
         private static void ObjectListView_Resize(object sender, EventArgs e)

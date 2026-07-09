@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 using iXnetManager.Theme;
@@ -33,6 +34,7 @@ namespace iXnetManager.Controls
 
         private MacTitleBar _titleBar;
         private bool _resizable = true;
+        private TableLayoutPanel _chromeLayout;
 
         public BaseChromeForm()
         {
@@ -67,30 +69,47 @@ namespace iXnetManager.Controls
             MinimizeBox = showMinimize;
 
             Size originalClientSize = ClientSize;
-            ClientSize = new Size(originalClientSize.Width, originalClientSize.Height + MacTitleBar.PreferredHeight);
+
+            // Rather than adding the title bar as a Dock=Top sibling next
+            // to whatever Dock=Fill content InitializeComponent already
+            // built (which depended on the two controls' add-order/timing
+            // and was still leaving the content's top rows rendered behind
+            // the title bar on some forms/machines), move all pre-existing
+            // top-level content into its own host panel and place both the
+            // title bar and that host into a 2-row TableLayoutPanel with a
+            // fixed-height row for the title bar and a 100% row for the
+            // content. A TableLayoutPanel's row sizes are resolved from its
+            // RowStyles up front, independent of child add-order, so this
+            // can't leave the content overlapping the title bar.
+            List<Control> originalControls = new List<Control>();
+            foreach (Control c in Controls)
+                originalControls.Add(c);
+            Controls.Clear();
+
+            Panel contentHost = new Panel();
+            contentHost.Dock = DockStyle.Fill;
+            contentHost.Margin = Padding.Empty;
+            foreach (Control c in originalControls)
+                contentHost.Controls.Add(c);
 
             _titleBar = new MacTitleBar(this, showMinimize, showMaximize, showThemeToggle);
-            Controls.Add(_titleBar);
-            _titleBar.BringToFront();
+            _titleBar.Dock = DockStyle.Fill;
 
-            // The form's original content (a single Dock=Fill panel/table
-            // added during InitializeComponent) was already laid out to
-            // fill the ORIGINAL, smaller client area, before the title bar
-            // existed as a sibling. Adding the title bar afterwards does
-            // not reliably force that content to re-run its Dock=Fill
-            // calculation against the new sibling on every machine, which
-            // left its top rows hidden behind the title bar. Kick the Dock
-            // property to force a fresh layout pass now that both exist.
-            foreach (Control child in Controls)
-            {
-                if (child != _titleBar && child.Dock == DockStyle.Fill)
-                {
-                    child.Dock = DockStyle.None;
-                    child.Dock = DockStyle.Fill;
-                }
-            }
+            _chromeLayout = new TableLayoutPanel();
+            _chromeLayout.Dock = DockStyle.Fill;
+            _chromeLayout.Margin = Padding.Empty;
+            _chromeLayout.Padding = Padding.Empty;
+            _chromeLayout.ColumnCount = 1;
+            _chromeLayout.RowCount = 2;
+            _chromeLayout.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
+            _chromeLayout.RowStyles.Add(new RowStyle(SizeType.Absolute, MacTitleBar.PreferredHeight));
+            _chromeLayout.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
+            _chromeLayout.Controls.Add(_titleBar, 0, 0);
+            _chromeLayout.Controls.Add(contentHost, 0, 1);
 
-            PerformLayout();
+            Controls.Add(_chromeLayout);
+
+            ClientSize = new Size(originalClientSize.Width, originalClientSize.Height + MacTitleBar.PreferredHeight);
         }
 
         protected override void WndProc(ref Message m)
