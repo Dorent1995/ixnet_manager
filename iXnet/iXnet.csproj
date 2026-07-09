@@ -1,0 +1,142 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{88BB285B-4E6E-479B-A4EC-3D8E1AF90DD6}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>iXnet</RootNamespace>
+    <AssemblyName>iXnet</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Bootloader\BootloaderClient.cs" />
+    <Compile Include="Bootloader\BootloaderProperties.cs" />
+    <Compile Include="Bootloader\FirmwareBinary.cs" />
+    <Compile Include="Bootloader\IntelHexFirmwareBinary.cs" />
+    <Compile Include="BroadcastAddress.cs" />
+    <Compile Include="BroadcastDiscoverResult.cs" />
+    <Compile Include="BroadcastServiceClientBase.cs" />
+    <Compile Include="ControlPort\ActiveLedCountProperty.cs" />
+    <Compile Include="ControlPort\BoolProperty.cs" />
+    <Compile Include="ControlPort\BootupDelayProperty.cs" />
+    <Compile Include="ControlPort\BrightnessProperty.cs" />
+    <Compile Include="ControlPort\ClearIRCalibrationProperty.cs" />
+    <Compile Include="ControlPort\BalanceColorLightProperty.cs" />
+    <Compile Include="ControlPort\ClearLedOnButtonPressedProperty.cs" />
+    <Compile Include="ControlPort\DebugDisplayProperty.cs" />
+    <Compile Include="ControlPort\DisableIRButtonProperty.cs" />
+    <Compile Include="ControlPort\ShutdownLedsAfter10MinProperty.cs" />
+    <Compile Include="ControlPort\EEPromFreeSpaceProperty.cs" />
+    <Compile Include="ControlPort\EEPromSizeProperty.cs" />
+    <Compile Include="ControlPort\ErrorEntry.cs" />
+    <Compile Include="ControlPort\ExtIOModeProperty.cs" />
+    <Compile Include="ControlPort\FactoryResetFlags.cs" />
+    <Compile Include="ControlPort\FwComponent.cs" />
+    <Compile Include="ControlPort\ControlPortClient.cs" />
+    <Compile Include="ControlPort\DigitsCountProperty.cs" />
+    <Compile Include="ControlPort\FeatureProperty.cs" />
+    <Compile Include="ControlPort\FwUpdateMode.cs" />
+    <Compile Include="ControlPort\InterfaceProperties.cs" />
+    <Compile Include="ControlPort\IProperty.cs" />
+    <Compile Include="ControlPort\LedBrightnessProperty.cs" />
+    <Compile Include="ControlPort\LedCountProperty.cs" />
+    <Compile Include="ControlPort\LedErrorEntry.cs" />
+    <Compile Include="ControlPort\LedTypeProperty.cs" />
+    <Compile Include="ControlPort\LightGridDedicatedDeviceProperty.cs" />
+    <Compile Include="ControlPort\LightGridErrorEntry.cs" />
+    <Compile Include="ControlPort\LightGridModeProperty.cs" />
+    <Compile Include="ControlPort\LogEntry.cs" />
+    <Compile Include="ControlPort\PowerCycleCountProperty.cs" />
+    <Compile Include="ControlPort\ProcessNextStepProperty.cs" />
+    <Compile Include="ControlPort\Process.cs" />
+    <Compile Include="ControlPort\ProcessBusErrorProperty.cs" />
+    <Compile Include="ControlPort\ProcessEnableProperty.cs" />
+    <Compile Include="ControlPort\ProcessManager.cs" />
+    <Compile Include="ControlPort\ProcessProperty.cs" />
+    <Compile Include="ControlPort\PropertyFactory.cs" />
+    <Compile Include="ControlPort\DigitBrightnessProperty.cs" />
+    <Compile Include="ControlPort\ReportLedBusCrcProperty.cs" />
+    <Compile Include="ControlPort\ResetStatus.cs" />
+    <Compile Include="ControlPort\ResetStatusProperty.cs" />
+    <Compile Include="ControlPort\RevisionProperty.cs" />
+    <Compile Include="ControlPort\StackSizeProperty.cs" />
+    <Compile Include="ControlPort\SupplyVoltageProperty.cs" />
+    <Compile Include="ControlPort\UInt16Property.cs" />
+    <Compile Include="ControlPort\UInt32Property.cs" />
+    <Compile Include="ControlPort\UInt8Property.cs" />
+    <Compile Include="ControlPort\UnknownProperty.cs" />
+    <Compile Include="ControlPort\UpTimeProperty.cs" />
+    <Compile Include="Converter.cs" />
+    <Compile Include="Feature.cs" />
+    <Compile Include="Helper.cs" />
+    <Compile Include="InputHub\AnalogDevice.cs" />
+    <Compile Include="InputHub\BaseHubDevice.cs" />
+    <Compile Include="InputHub\ButtonDevice.cs" />
+    <Compile Include="InputHub\ButtonReceivedHandler.cs" />
+    <Compile Include="InputHub\ButtonState.cs" />
+    <Compile Include="InputHub\CharacterDevice.cs" />
+    <Compile Include="InputHub\CharacterReceivedHandler.cs" />
+    <Compile Include="InputHub\IHubDevice.cs" />
+    <Compile Include="InputHub\InputHubClient.cs" />
+    <Compile Include="InputHub\InputHubEventReceiver.cs" />
+    <Compile Include="InputHub\UniqueDevID.cs" />
+    <Compile Include="iXnetDevice.cs" />
+    <Compile Include="LedPort\KnownLedColor.cs" />
+    <Compile Include="LedPort\LedColor.cs" />
+    <Compile Include="LedPort\LedMode.cs" />
+    <Compile Include="LedPort\LedPortClient.cs" />
+    <Compile Include="MacAddress.cs" />
+    <Compile Include="Network.cs" />
+    <Compile Include="OperationModus.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SendError.cs" />
+    <Compile Include="SendReport.cs" />
+    <Compile Include="ServiceClientBase.cs" />
+    <Compile Include="Time.cs" />
+    <Compile Include="UdpDiscover.cs" />
+    <Compile Include="UdpDiscoverResult.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

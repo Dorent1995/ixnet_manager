@@ -1,0 +1,194 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{5FD04E46-BB31-413C-840E-6984F3E95775}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>iXnetManager</RootNamespace>
+    <AssemblyName>iXnetManager</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Resources\ix_logo_ixnet.ico</ApplicationIcon>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="ObjectListView">
+      <HintPath>..\depends\ObjectListView.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AddDeviceForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AddDeviceForm.Designer.cs">
+      <DependentUpon>AddDeviceForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ErrorObject.cs" />
+    <Compile Include="FlashFirmwareState.cs" />
+    <Compile Include="FlashLedModulesForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FlashLedModulesForm.Designer.cs">
+      <DependentUpon>FlashLedModulesForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FlashProgramMemoryForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FlashProgramMemoryForm.Designer.cs">
+      <DependentUpon>FlashProgramMemoryForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="LedTestForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="LedTestForm.Designer.cs">
+      <DependentUpon>LedTestForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="IPAddressTypeConverter.cs" />
+    <Compile Include="IPRangeAssignForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="IPRangeAssignForm.Designer.cs">
+      <DependentUpon>IPRangeAssignForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MainForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MainForm.Designer.cs">
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="NetDevice.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="ProgressForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ProgressForm.Designer.cs">
+      <DependentUpon>ProgressForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="PropertyBag.cs" />
+    <Compile Include="SecurityTokenForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SecurityTokenForm.Designer.cs">
+      <DependentUpon>SecurityTokenForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SendDebugCharactersForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SendDebugCharactersForm.Designer.cs">
+      <DependentUpon>SendDebugCharactersForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="StressTester.cs" />
+    <EmbeddedResource Include="AddDeviceForm.resx">
+      <DependentUpon>AddDeviceForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FlashLedModulesForm.resx">
+      <DependentUpon>FlashLedModulesForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FlashProgramMemoryForm.resx">
+      <DependentUpon>FlashProgramMemoryForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LedTestForm.resx">
+      <DependentUpon>LedTestForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="IPRangeAssignForm.resx">
+      <DependentUpon>IPRangeAssignForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MainForm.resx">
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ProgressForm.resx">
+      <DependentUpon>ProgressForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <EmbeddedResource Include="SecurityTokenForm.resx">
+      <DependentUpon>SecurityTokenForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SendDebugCharactersForm.resx">
+      <DependentUpon>SendDebugCharactersForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <None Include="app.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ix_logo_ixnet.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\iXnet\iXnet.csproj">
+      <Project>{88BB285B-4E6E-479B-A4EC-3D8E1AF90DD6}</Project>
+      <Name>iXnet</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ram.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\S2Modul.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\S2Modul1.png" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
