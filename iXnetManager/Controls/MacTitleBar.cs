@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Windows.Forms;
@@ -6,9 +7,17 @@ using iXnetManager.Theme;
 
 namespace iXnetManager.Controls
 {
+    internal enum CaptionButtonKind
+    {
+        Close,
+        Minimize,
+        Maximize
+    }
+
     /// <summary>
-    /// Custom macOS-style title bar: red/yellow/green traffic light buttons
-    /// on the left, centered window title, and a small Light/Dark theme
+    /// Custom title bar: centered window title, minimalist monochrome
+    /// window-control buttons (close/minimize/maximize - no colored
+    /// "traffic light" circles) on the left, and a small Light/Dark theme
     /// toggle on the right. Meant to be docked to the top of a
     /// <see cref="BaseChromeForm"/> whose native FormBorderStyle is None.
     /// </summary>
@@ -16,17 +25,15 @@ namespace iXnetManager.Controls
     {
         public const int PreferredHeight = 36;
 
-        private const int DotDiameter = 12;
-        private const int DotSpacing = 8;
-        private const int LeftMargin = 14;
+        private const int ButtonWidth = 34;
 
         private readonly Form _owner;
         private readonly bool _showMinimize;
         private readonly bool _showMaximize;
         private readonly bool _showThemeToggle;
+        private readonly List<CaptionButtonKind> _buttons;
 
-        private bool _trafficHover;
-        private int _hoverDotIndex = -1; // 0=close,1=min,2=max
+        private int _hoverButtonIndex = -1;
         private bool _themeHover;
         private readonly EventHandler _themeChangedHandler;
 
@@ -37,6 +44,12 @@ namespace iXnetManager.Controls
             _showMaximize = showMaximize;
             _showThemeToggle = showThemeToggle;
 
+            _buttons = new List<CaptionButtonKind> { CaptionButtonKind.Close };
+            if (_showMinimize)
+                _buttons.Add(CaptionButtonKind.Minimize);
+            if (_showMaximize)
+                _buttons.Add(CaptionButtonKind.Maximize);
+
             SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.UserPaint |
                       ControlStyles.OptimizedDoubleBuffer | ControlStyles.ResizeRedraw, true);
 
@@ -46,6 +59,9 @@ namespace iXnetManager.Controls
             _themeChangedHandler = delegate { Invalidate(); };
             ThemeManager.ThemeChanged += _themeChangedHandler;
             _owner.TextChanged += (s, e) => Invalidate();
+
+            if (_showMaximize)
+                _owner.Resize += (s, e) => Invalidate(); // maximize glyph flips to "restore"
         }
 
         protected override void Dispose(bool disposing)
@@ -56,18 +72,14 @@ namespace iXnetManager.Controls
             base.Dispose(disposing);
         }
 
-        private Rectangle DotRect(int index)
+        private Rectangle ButtonRect(int visibleIndex)
         {
-            int x = LeftMargin + index * (DotDiameter + DotSpacing);
-            int y = (Height - DotDiameter) / 2;
-            return new Rectangle(x, y, DotDiameter, DotDiameter);
+            return new Rectangle(visibleIndex * ButtonWidth, 0, ButtonWidth, Height);
         }
 
-        private Rectangle TrafficClusterRect()
+        private Rectangle ButtonClusterRect()
         {
-            Rectangle first = DotRect(0);
-            Rectangle last = DotRect(2);
-            return Rectangle.FromLTRB(first.Left - 6, 0, last.Right + 6, Height);
+            return new Rectangle(0, 0, _buttons.Count * ButtonWidth, Height);
         }
 
         private Rectangle ThemeToggleRect()
@@ -83,7 +95,7 @@ namespace iXnetManager.Controls
         /// draggable caption area.</summary>
         public bool HitTestButton(Point clientPoint)
         {
-            if (TrafficClusterRect().Contains(clientPoint))
+            if (ButtonClusterRect().Contains(clientPoint))
                 return true;
 
             if (_showThemeToggle && ThemeToggleRect().Contains(clientPoint))
@@ -96,29 +108,26 @@ namespace iXnetManager.Controls
         {
             base.OnMouseMove(e);
 
-            bool wasTrafficHover = _trafficHover;
-            int prevDot = _hoverDotIndex;
+            int prevButton = _hoverButtonIndex;
             bool wasThemeHover = _themeHover;
 
-            _trafficHover = TrafficClusterRect().Contains(e.Location);
-            _hoverDotIndex = -1;
-            for (int i = 0; i < 3; i++)
+            _hoverButtonIndex = -1;
+            for (int i = 0; i < _buttons.Count; i++)
             {
-                if (DotRect(i).Contains(e.Location))
-                    _hoverDotIndex = i;
+                if (ButtonRect(i).Contains(e.Location))
+                    _hoverButtonIndex = i;
             }
 
             _themeHover = _showThemeToggle && ThemeToggleRect().Contains(e.Location);
 
-            if (wasTrafficHover != _trafficHover || prevDot != _hoverDotIndex || wasThemeHover != _themeHover)
+            if (prevButton != _hoverButtonIndex || wasThemeHover != _themeHover)
                 Invalidate();
         }
 
         protected override void OnMouseLeave(EventArgs e)
         {
             base.OnMouseLeave(e);
-            _trafficHover = false;
-            _hoverDotIndex = -1;
+            _hoverButtonIndex = -1;
             _themeHover = false;
             Invalidate();
         }
@@ -130,30 +139,30 @@ namespace iXnetManager.Controls
             if (e.Button != MouseButtons.Left)
                 return;
 
-            if (DotRect(0).Contains(e.Location))
+            for (int i = 0; i < _buttons.Count; i++)
             {
-                _owner.Close();
-                return;
-            }
+                if (!ButtonRect(i).Contains(e.Location))
+                    continue;
 
-            if (_showMinimize && DotRect(1).Contains(e.Location))
-            {
-                _owner.WindowState = FormWindowState.Minimized;
-                return;
-            }
-
-            if (_showMaximize && DotRect(2).Contains(e.Location))
-            {
-                _owner.WindowState = _owner.WindowState == FormWindowState.Maximized
-                    ? FormWindowState.Normal
-                    : FormWindowState.Maximized;
+                switch (_buttons[i])
+                {
+                    case CaptionButtonKind.Close:
+                        _owner.Close();
+                        break;
+                    case CaptionButtonKind.Minimize:
+                        _owner.WindowState = FormWindowState.Minimized;
+                        break;
+                    case CaptionButtonKind.Maximize:
+                        _owner.WindowState = _owner.WindowState == FormWindowState.Maximized
+                            ? FormWindowState.Normal
+                            : FormWindowState.Maximized;
+                        break;
+                }
                 return;
             }
 
             if (_showThemeToggle && ThemeToggleRect().Contains(e.Location))
-            {
                 ThemeManager.Toggle();
-            }
         }
 
         protected override void OnPaint(PaintEventArgs e)
@@ -170,9 +179,8 @@ namespace iXnetManager.Controls
             using (Pen bottomLine = new Pen(palette.Divider))
                 g.DrawLine(bottomLine, 0, Height - 1, Width, Height - 1);
 
-            PaintDot(g, 0, palette.TrafficRed, true, "\u00D7");
-            PaintDot(g, 1, palette.TrafficYellow, _showMinimize, "\u2212");
-            PaintDot(g, 2, palette.TrafficGreen, _showMaximize, "+");
+            for (int i = 0; i < _buttons.Count; i++)
+                PaintCaptionButton(g, i, _buttons[i], palette);
 
             if (_showThemeToggle)
                 PaintThemeToggle(g, palette);
@@ -180,28 +188,55 @@ namespace iXnetManager.Controls
             PaintTitle(g, palette);
         }
 
-        private void PaintDot(Graphics g, int index, Color color, bool enabled, string glyph)
+        private void PaintCaptionButton(Graphics g, int index, CaptionButtonKind kind, ThemePalette palette)
         {
-            Rectangle rect = DotRect(index);
-            Color drawColor = enabled ? color : ControlPaint.Light(ThemeManager.Current.TitleBarBackground, 0.02f);
-            Color borderColor = enabled ? Color.FromArgb(40, 0, 0, 0) : ThemeManager.Current.Divider;
+            Rectangle rect = ButtonRect(index);
+            bool hovered = _hoverButtonIndex == index;
+            bool isClose = kind == CaptionButtonKind.Close;
 
-            using (SolidBrush brush = new SolidBrush(drawColor))
-                g.FillEllipse(brush, rect);
-
-            using (Pen pen = new Pen(borderColor))
-                g.DrawEllipse(pen, rect);
-
-            if (enabled && (_trafficHover))
+            if (hovered)
             {
-                using (Font glyphFont = new Font(AppFonts.FamilyName, 7f, FontStyle.Bold))
-                using (SolidBrush glyphBrush = new SolidBrush(ThemeManager.Current.TrafficGlyph))
+                Color hoverColor = isClose ? Color.FromArgb(232, 17, 35) : Color.FromArgb(24, palette.TextPrimary);
+                using (SolidBrush hoverBrush = new SolidBrush(hoverColor))
+                    g.FillRectangle(hoverBrush, rect);
+            }
+
+            Color glyphColor = hovered && isClose ? Color.White : palette.TextSecondary;
+            if (hovered && !isClose)
+                glyphColor = palette.TextPrimary;
+
+            using (Pen pen = new Pen(glyphColor, 1.2f))
+            {
+                pen.StartCap = LineCap.Flat;
+                pen.EndCap = LineCap.Flat;
+
+                int cx = rect.X + rect.Width / 2;
+                int cy = rect.Y + rect.Height / 2;
+                int half = 5;
+
+                switch (kind)
                 {
-                    SizeF textSize = g.MeasureString(glyph, glyphFont);
-                    PointF pos = new PointF(
-                        rect.X + (rect.Width - textSize.Width) / 2f,
-                        rect.Y + (rect.Height - textSize.Height) / 2f - 1f);
-                    g.DrawString(glyph, glyphFont, glyphBrush, pos);
+                    case CaptionButtonKind.Close:
+                        g.DrawLine(pen, cx - half, cy - half, cx + half, cy + half);
+                        g.DrawLine(pen, cx - half, cy + half, cx + half, cy - half);
+                        break;
+
+                    case CaptionButtonKind.Minimize:
+                        g.DrawLine(pen, cx - half, cy, cx + half, cy);
+                        break;
+
+                    case CaptionButtonKind.Maximize:
+                        if (_owner.WindowState == FormWindowState.Maximized)
+                        {
+                            // "restore" glyph: two overlapping outlined squares
+                            g.DrawRectangle(pen, cx - half + 2, cy - half, (half - 1) * 2, (half - 1) * 2);
+                            g.DrawRectangle(pen, cx - half, cy - half + 2, (half - 1) * 2, (half - 1) * 2);
+                        }
+                        else
+                        {
+                            g.DrawRectangle(pen, cx - half, cy - half, half * 2, half * 2);
+                        }
+                        break;
                 }
             }
         }
@@ -240,7 +275,7 @@ namespace iXnetManager.Controls
             {
                 SizeF textSize = g.MeasureString(title, titleFont);
 
-                int leftReserved = TrafficClusterRect().Right + 8;
+                int leftReserved = ButtonClusterRect().Right + 10;
                 int rightReserved = _showThemeToggle ? Width - ThemeToggleRect().Left + 8 : 8;
 
                 float x = (Width - textSize.Width) / 2f;

@@ -41,6 +41,9 @@ namespace iXnetManager.Theme
         public Color PrimaryButtonHoverBackground;
         public Color PrimaryButtonPressedBackground;
         public Color PrimaryButtonText;
+        public Color DisabledButtonBackground;
+        public Color DisabledButtonForeColor;
+        public Color DisabledButtonBorder;
         public Color Divider;
         public Color TrafficRed;
         public Color TrafficYellow;
@@ -90,6 +93,9 @@ namespace iXnetManager.Theme
             PrimaryButtonHoverBackground = Color.FromArgb(20, 137, 255),
             PrimaryButtonPressedBackground = Color.FromArgb(0, 100, 220),
             PrimaryButtonText = Color.White,
+            DisabledButtonBackground = Color.FromArgb(241, 241, 244),
+            DisabledButtonForeColor = Color.FromArgb(175, 175, 181),
+            DisabledButtonBorder = Color.FromArgb(230, 230, 234),
             Divider = Color.FromArgb(226, 226, 230),
             TrafficRed = Color.FromArgb(255, 95, 87),
             TrafficYellow = Color.FromArgb(255, 189, 46),
@@ -128,6 +134,9 @@ namespace iXnetManager.Theme
             PrimaryButtonHoverBackground = Color.FromArgb(35, 150, 255),
             PrimaryButtonPressedBackground = Color.FromArgb(0, 110, 225),
             PrimaryButtonText = Color.White,
+            DisabledButtonBackground = Color.FromArgb(46, 46, 49),
+            DisabledButtonForeColor = Color.FromArgb(105, 105, 110),
+            DisabledButtonBorder = Color.FromArgb(56, 56, 60),
             Divider = Color.FromArgb(58, 58, 62),
             TrafficRed = Color.FromArgb(255, 95, 87),
             TrafficYellow = Color.FromArgb(255, 189, 46),

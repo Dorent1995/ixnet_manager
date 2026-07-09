@@ -33,7 +33,7 @@ namespace iXnetManager
         {
             InitializeComponent();
             InstallChrome(resizable: true, showMinimize: true, showMaximize: true);
-            ThemeApplier.Apply(this, mBTNApplyChanges, mBTNDiscover);
+            ThemeApplier.Apply(this);
 
             Icon = Resources.ix_logo_ixnet;
 

@@ -41,6 +41,13 @@ namespace iXnetManager.Controls
                 EventHandler themeHandler = delegate { ApplyButtonColors(button, primary); };
                 ThemeManager.ThemeChanged += themeHandler;
 
+                // A disabled button (e.g. "Apply Changes" when nothing has
+                // changed) must look visibly different from an enabled one -
+                // FlatStyle with custom colors bypasses Windows' automatic
+                // disabled-graying, so we re-apply colors ourselves whenever
+                // Enabled flips.
+                button.EnabledChanged += delegate { ApplyButtonColors(button, primary); };
+
                 // Dialogs (SecurityTokenForm, AddDeviceForm, ...) can be
                 // instantiated many times during a session. Without this,
                 // every closed dialog's buttons would stay referenced
@@ -58,6 +65,16 @@ namespace iXnetManager.Controls
         private static void ApplyButtonColors(Button button, bool primary)
         {
             ThemePalette palette = ThemeManager.Current;
+
+            if (!button.Enabled)
+            {
+                button.BackColor = palette.DisabledButtonBackground;
+                button.ForeColor = palette.DisabledButtonForeColor;
+                button.FlatAppearance.BorderColor = palette.DisabledButtonBorder;
+                button.FlatAppearance.MouseOverBackColor = palette.DisabledButtonBackground;
+                button.FlatAppearance.MouseDownBackColor = palette.DisabledButtonBackground;
+                return;
+            }
 
             if (primary)
             {

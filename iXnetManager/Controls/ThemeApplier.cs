@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
+using BrightIdeasSoftware;
 using iXnetManager.Theme;
 
 namespace iXnetManager.Controls
@@ -25,7 +26,15 @@ namespace iXnetManager.Controls
             EventHandler apply = null;
             apply = delegate
             {
-                form.Font = AppFonts.Regular(9f);
+                // IMPORTANT: never reassign form.Font here. These forms use
+                // AutoScaleMode.Font (the WinForms default) - changing a
+                // Form's own Font at runtime makes WinForms silently
+                // re-run its design-time auto-scale pass, rescaling every
+                // child control's Location/Size a second time against the
+                // NEW font metrics. That is what caused the distorted /
+                // overlapping layout. Individual child controls still get
+                // AppFonts applied below (that's safe - it does not
+                // trigger the Form-level rescale).
 
                 // BaseChromeForm uses its own BackColor as the 1px window
                 // border color (see InstallChrome); the actual background
@@ -101,22 +110,25 @@ namespace iXnetManager.Controls
             else if (c is GroupBox)
             {
                 c.ForeColor = p.TextPrimary;
-                c.BackColor = Color.Transparent;
+                c.BackColor = ParentBackground(c, p);
             }
             else if (c is CheckBox)
             {
                 c.ForeColor = p.TextPrimary;
-                c.BackColor = Color.Transparent;
+                c.BackColor = ParentBackground(c, p);
             }
             else if (c is RadioButton)
             {
                 c.ForeColor = p.TextPrimary;
-                c.BackColor = Color.Transparent;
+                c.BackColor = ParentBackground(c, p);
+            }
+            else if (c is ObjectListView)
+            {
+                StyleObjectListView((ObjectListView)c);
             }
             else if (c is ListView)
             {
-                c.BackColor = p.ControlBackground;
-                c.ForeColor = p.TextPrimary;
+                StylePlainListView((ListView)c);
             }
             else if (c is TreeView)
             {
@@ -138,8 +150,26 @@ namespace iXnetManager.Controls
             else if (c is Label)
             {
                 c.ForeColor = p.TextPrimary;
-                c.BackColor = Color.Transparent;
+                c.BackColor = ParentBackground(c, p);
             }
+        }
+
+        /// <summary>
+        /// Returns the effective background color the parent control is
+        /// painted with, so children can match it exactly instead of
+        /// relying on WinForms' BackColor = Transparent "parent paint"
+        /// trick, which can leave stale white patches (especially in Dark
+        /// mode, and around Region-rounded siblings).
+        /// </summary>
+        private static Color ParentBackground(Control c, ThemePalette p)
+        {
+            if (c.Parent == null)
+                return p.WindowBackground;
+
+            if (c.Parent is TabPage || c.Parent is TableLayoutPanel || c.Parent is Panel)
+                return p.WindowBackground;
+
+            return c.Parent.BackColor;
         }
 
         private static void StyleTabControl(TabControl tab)
@@ -190,6 +220,76 @@ namespace iXnetManager.Controls
             }
         }
 
+        private static void StyleObjectListView(ObjectListView olv)
+        {
+            ThemePalette p = ThemeManager.Current;
+
+            olv.BackColor = p.ControlBackground;
+            olv.ForeColor = p.TextPrimary;
+
+            // ObjectListView draws its own header separately from the
+            // BackColor above; without this it stays a native white/themed
+            // header even in Dark mode.
+            olv.HeaderUsesThemes = false;
+            olv.HeaderWordWrap = false;
+
+            HeaderFormatStyle style = new HeaderFormatStyle();
+            style.Normal.BackColor = p.WindowBackground;
+            style.Normal.ForeColor = p.TextPrimary;
+            style.Hot.BackColor = p.ButtonHoverBackground;
+            style.Hot.ForeColor = p.TextPrimary;
+            style.Pressed.BackColor = p.ButtonPressedBackground;
+            style.Pressed.ForeColor = p.TextPrimary;
+            olv.HeaderFormatStyle = style;
+        }
+
+        private static void StylePlainListView(ListView listView)
+        {
+            ThemePalette p = ThemeManager.Current;
+
+            listView.BackColor = p.ControlBackground;
+            listView.ForeColor = p.TextPrimary;
+
+            if (listView.View != View.Details)
+                return;
+
+            // Plain System.Windows.Forms.ListView column headers are drawn
+            // by the OS and ignore BackColor entirely - owner-draw them so
+            // Dark mode does not leave a white header bar.
+            listView.OwnerDraw = true;
+
+            listView.DrawColumnHeader -= ListView_DrawColumnHeader;
+            listView.DrawColumnHeader += ListView_DrawColumnHeader;
+            listView.DrawItem -= ListView_DrawItem;
+            listView.DrawItem += ListView_DrawItem;
+            listView.DrawSubItem -= ListView_DrawSubItem;
+            listView.DrawSubItem += ListView_DrawSubItem;
+        }
+
+        private static void ListView_DrawColumnHeader(object sender, DrawListViewColumnHeaderEventArgs e)
+        {
+            ThemePalette p = ThemeManager.Current;
+
+            using (SolidBrush backBrush = new SolidBrush(p.WindowBackground))
+                e.Graphics.FillRectangle(backBrush, e.Bounds);
+
+            TextRenderer.DrawText(e.Graphics, e.Header.Text, e.Font, e.Bounds, p.TextPrimary,
+                TextFormatFlags.VerticalCenter | TextFormatFlags.Left | TextFormatFlags.EndEllipsis);
+
+            using (Pen linePen = new Pen(p.Divider))
+                e.Graphics.DrawLine(linePen, e.Bounds.Right - 1, e.Bounds.Top, e.Bounds.Right - 1, e.Bounds.Bottom);
+        }
+
+        private static void ListView_DrawItem(object sender, DrawListViewItemEventArgs e)
+        {
+            e.DrawDefault = true;
+        }
+
+        private static void ListView_DrawSubItem(object sender, DrawListViewSubItemEventArgs e)
+        {
+            e.DrawDefault = true;
+        }
+
         private static void StylePropertyGrid(PropertyGrid grid)
         {
             ThemePalette p = ThemeManager.Current;
@@ -209,6 +309,10 @@ namespace iXnetManager.Controls
             grid.CommandsBorderColor = p.Divider;
             grid.SelectedItemWithFocusBackColor = p.Accent;
             grid.SelectedItemWithFocusForeColor = p.AccentText;
+
+            // Read-only properties get a visibly muted color so they
+            // are clearly distinguishable from editable ones.
+            grid.DisabledItemForeColor = p.TextSecondary;
         }
     }
 }
