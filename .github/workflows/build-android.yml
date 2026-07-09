@@ -6,9 +6,13 @@ on:
       - "feature/android-app"
   workflow_dispatch:
 
+permissions:
+  contents: write
+
 jobs:
   build:
     runs-on: ubuntu-latest
+    timeout-minutes: 25
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -52,6 +56,10 @@ jobs:
         working-directory: android
         run: |
           gradle assembleDebug --stacktrace --no-daemon 2>&1 | tee build.log
+
+      - name: Show build log tail
+        if: always()
+        run: tail -n 200 android/build.log || true
 
       - name: Publish build output + logs to branch (always)
         if: always()
