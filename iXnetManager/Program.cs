@@ -13,11 +13,10 @@ namespace iXnetManager
         [STAThread]
         static void Main()
         {
-            // Must be the very first call: without this the app is not
-            // marked DPI-aware, so on scaled displays Windows renders it
-            // at 96 DPI and then bitmap-stretches the result to fit -
-            // which is what causes blurry text and oversized controls.
-            try { Application.SetHighDpiMode(HighDpiMode.SystemAware); } catch { }
+            // DPI awareness is declared in app.manifest (dpiAware=true) -
+            // classic .NET Framework WinForms does not expose a callable
+            // Application.SetHighDpiMode API (that's a .NET Core/5+ WinForms
+            // addition); the manifest is the correct mechanism here.
 
             AppDomain.CurrentDomain.UnhandledException += (s, e) =>
             {
