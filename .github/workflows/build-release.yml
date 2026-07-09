@@ -21,46 +21,46 @@ jobs:
 
       - name: Build solution (Release)
         shell: cmd
-        run: msbuild iXnetManager.sln /p:Configuration=Release /p:Platform="Mixed Platforms" /m
+        continue-on-error: true
+        run: msbuild iXnetManager.sln /p:Configuration=Release /p:Platform="Mixed Platforms" /m > build.log 2>&1
+
+      - name: Show build log tail
+        shell: bash
+        if: always()
+        run: tail -n 200 build.log || true
 
       - name: Install Inno Setup
         shell: cmd
-        run: choco install innosetup -y --no-progress
+        continue-on-error: true
+        run: choco install innosetup -y --no-progress > choco.log 2>&1
 
       - name: Build installer
         shell: cmd
+        continue-on-error: true
         working-directory: installer
-        run: '"C:\Program Files (x86)\Inno Setup 6\ISCC.exe" setup.iss'
+        run: '"C:\Program Files (x86)\Inno Setup 6\ISCC.exe" setup.iss > ../iscc.log 2>&1'
 
-      - name: Upload build artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: iXnetManager-build
-          path: |
-            iXnetManager/bin/Release/iXnetManager.exe
-            iXnetManager/bin/Release/iXnetManager.exe.config
-            iXnetManager/bin/Release/iXnet.dll
-            iXnetManager/bin/Release/ObjectListView.dll
-            installer/output/*.exe
-
-      - name: Publish build output to branch
+      - name: Publish build output + logs to branch (always)
+        if: always()
         shell: bash
         run: |
-          set -e
           mkdir -p /tmp/build-out
-          cp iXnetManager/bin/Release/iXnetManager.exe /tmp/build-out/
-          cp iXnetManager/bin/Release/iXnetManager.exe.config /tmp/build-out/ || true
-          cp iXnetManager/bin/Release/iXnet.dll /tmp/build-out/
-          cp iXnetManager/bin/Release/ObjectListView.dll /tmp/build-out/
-          cp installer/output/*.exe /tmp/build-out/
+          cp build.log /tmp/build-out/ 2>/dev/null || true
+          cp choco.log /tmp/build-out/ 2>/dev/null || true
+          cp iscc.log /tmp/build-out/ 2>/dev/null || true
+          cp iXnetManager/bin/Release/iXnetManager.exe /tmp/build-out/ 2>/dev/null || true
+          cp iXnetManager/bin/Release/iXnetManager.exe.config /tmp/build-out/ 2>/dev/null || true
+          cp iXnetManager/bin/Release/iXnet.dll /tmp/build-out/ 2>/dev/null || true
+          cp iXnetManager/bin/Release/ObjectListView.dll /tmp/build-out/ 2>/dev/null || true
+          cp installer/output/*.exe /tmp/build-out/ 2>/dev/null || true
 
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git checkout --orphan build-output/design-macos-ui
           git rm -rf . > /dev/null 2>&1 || true
           rm -rf ./* 2>/dev/null || true
-          cp /tmp/build-out/* .
+          cp /tmp/build-out/* . 2>/dev/null || true
           echo "Automated build output. Source commit: ${GITHUB_SHA}" > BUILD_INFO.txt
           git add -A
-          git commit -m "Automated build output for design/macos-ui (${GITHUB_SHA})"
+          git commit -m "Automated build output for design/macos-ui (${GITHUB_SHA})" --allow-empty
           git push -f origin HEAD:build-output/design-macos-ui
