@@ -101,7 +101,7 @@ namespace iXnetManager.Theme
             TrafficYellow = Color.FromArgb(255, 189, 46),
             TrafficGreen = Color.FromArgb(40, 200, 64),
             TrafficGlyph = Color.FromArgb(77, 0, 0),
-            TabSelectedBackground = Color.White,
+            TabSelectedBackground = Color.FromArgb(246, 246, 248), // matches WindowBackground exactly: seamless tab-to-page transition
             TabUnselectedText = Color.FromArgb(110, 110, 118),
             SliderTrackFilled = Color.FromArgb(0, 122, 255),
             SliderTrackEmpty = Color.FromArgb(224, 224, 228),
@@ -142,7 +142,7 @@ namespace iXnetManager.Theme
             TrafficYellow = Color.FromArgb(255, 189, 46),
             TrafficGreen = Color.FromArgb(40, 200, 64),
             TrafficGlyph = Color.FromArgb(40, 0, 0),
-            TabSelectedBackground = Color.FromArgb(44, 44, 47),
+            TabSelectedBackground = Color.FromArgb(30, 30, 32), // matches WindowBackground exactly: seamless tab-to-page transition
             TabUnselectedText = Color.FromArgb(160, 160, 168),
             SliderTrackFilled = Color.FromArgb(10, 132, 255),
             SliderTrackEmpty = Color.FromArgb(72, 72, 76),

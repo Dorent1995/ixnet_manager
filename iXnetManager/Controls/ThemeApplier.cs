@@ -183,9 +183,14 @@ namespace iXnetManager.Controls
         private static void StyleTabControl(TabControl tab)
         {
             tab.DrawMode = TabDrawMode.OwnerDrawFixed;
-            tab.SizeMode = TabSizeMode.Fixed;
-            tab.Padding = new Point(14, 6);
-            tab.ItemSize = new Size(Math.Max(120, tab.ItemSize.Width), 30);
+
+            // Deliberately NOT SizeMode.Fixed: a single fixed width for all
+            // tabs either clips/wraps long labels ("iXnet Manager Settings")
+            // or wastes space on short ones ("Logs"). Normal sizing lets the
+            // native tab strip measure each tab against its own Font/Text,
+            // same as before this control was owner-drawn - only colors and
+            // the accent underline are custom, layout is untouched.
+            tab.Padding = new Point(16, 6);
 
             // -= before += so repeated Apply() calls (theme toggles) never
             // stack duplicate handlers.
