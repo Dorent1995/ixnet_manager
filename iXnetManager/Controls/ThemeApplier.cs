@@ -291,6 +291,39 @@ namespace iXnetManager.Controls
             style.Pressed.BackColor = p.ButtonPressedBackground;
             style.Pressed.ForeColor = p.TextPrimary;
             olv.HeaderFormatStyle = style;
+
+            // Stretch the last column so the list always fills the full
+            // width of its container instead of leaving a bare strip on
+            // the right - recompute whenever the control is resized.
+            olv.Resize -= ObjectListView_Resize;
+            olv.Resize += ObjectListView_Resize;
+            FillLastColumn(olv);
+        }
+
+        private static void ObjectListView_Resize(object sender, EventArgs e)
+        {
+            FillLastColumn((ObjectListView)sender);
+        }
+
+        private static void FillLastColumn(ObjectListView olv)
+        {
+            if (olv.Columns.Count == 0 || olv.IsDisposed)
+                return;
+
+            ColumnHeader lastColumn = olv.Columns[olv.Columns.Count - 1];
+
+            int othersWidth = 0;
+            foreach (ColumnHeader col in olv.Columns)
+            {
+                if (col != lastColumn)
+                    othersWidth += col.Width;
+            }
+
+            int scrollbarAllowance = SystemInformation.VerticalScrollBarWidth;
+            int available = olv.ClientSize.Width - othersWidth - scrollbarAllowance - 2;
+
+            const int minWidth = 60;
+            lastColumn.Width = Math.Max(minWidth, available);
         }
 
         private static void StylePlainListView(ListView listView)

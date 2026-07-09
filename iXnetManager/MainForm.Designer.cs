@@ -164,7 +164,7 @@
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 3;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 60F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 84F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 217F));
             this.tableLayoutPanel1.Size = new System.Drawing.Size(1008, 585);
             this.tableLayoutPanel1.TabIndex = 0;
@@ -275,7 +275,7 @@
             // 
             // mBtnAddManually
             // 
-            this.mBtnAddManually.Location = new System.Drawing.Point(237, 28);
+            this.mBtnAddManually.Location = new System.Drawing.Point(237, 50);
             this.mBtnAddManually.Name = "mBtnAddManually";
             this.mBtnAddManually.Size = new System.Drawing.Size(111, 23);
             this.mBtnAddManually.TabIndex = 10;
@@ -285,7 +285,7 @@
             // 
             // mBTNFactoryReset
             // 
-            this.mBTNFactoryReset.Location = new System.Drawing.Point(471, 3);
+            this.mBTNFactoryReset.Location = new System.Drawing.Point(471, 15);
             this.mBTNFactoryReset.Name = "mBTNFactoryReset";
             this.mBTNFactoryReset.Size = new System.Drawing.Size(111, 23);
             this.mBTNFactoryReset.TabIndex = 7;
@@ -295,7 +295,7 @@
             // 
             // mBTNFlashLedModules
             // 
-            this.mBTNFlashLedModules.Location = new System.Drawing.Point(120, 28);
+            this.mBTNFlashLedModules.Location = new System.Drawing.Point(120, 50);
             this.mBTNFlashLedModules.Name = "mBTNFlashLedModules";
             this.mBTNFlashLedModules.Size = new System.Drawing.Size(111, 23);
             this.mBTNFlashLedModules.TabIndex = 6;
@@ -305,7 +305,7 @@
             // 
             // mBTNFlashDevices
             // 
-            this.mBTNFlashDevices.Location = new System.Drawing.Point(3, 28);
+            this.mBTNFlashDevices.Location = new System.Drawing.Point(3, 50);
             this.mBTNFlashDevices.Name = "mBTNFlashDevices";
             this.mBTNFlashDevices.Size = new System.Drawing.Size(111, 23);
             this.mBTNFlashDevices.TabIndex = 5;
@@ -316,7 +316,7 @@
             // mBTNDiscardChanges
             // 
             this.mBTNDiscardChanges.Enabled = false;
-            this.mBTNDiscardChanges.Location = new System.Drawing.Point(237, 3);
+            this.mBTNDiscardChanges.Location = new System.Drawing.Point(237, 15);
             this.mBTNDiscardChanges.Name = "mBTNDiscardChanges";
             this.mBTNDiscardChanges.Size = new System.Drawing.Size(111, 23);
             this.mBTNDiscardChanges.TabIndex = 2;
@@ -326,7 +326,7 @@
             // 
             // mBTNReset
             // 
-            this.mBTNReset.Location = new System.Drawing.Point(354, 3);
+            this.mBTNReset.Location = new System.Drawing.Point(354, 15);
             this.mBTNReset.Name = "mBTNReset";
             this.mBTNReset.Size = new System.Drawing.Size(111, 23);
             this.mBTNReset.TabIndex = 1;
@@ -337,7 +337,7 @@
             // mBTNApplyChanges
             // 
             this.mBTNApplyChanges.Enabled = false;
-            this.mBTNApplyChanges.Location = new System.Drawing.Point(120, 3);
+            this.mBTNApplyChanges.Location = new System.Drawing.Point(120, 15);
             this.mBTNApplyChanges.Name = "mBTNApplyChanges";
             this.mBTNApplyChanges.Size = new System.Drawing.Size(111, 23);
             this.mBTNApplyChanges.TabIndex = 1;
@@ -347,7 +347,7 @@
             // 
             // mBTNDiscover
             // 
-            this.mBTNDiscover.Location = new System.Drawing.Point(3, 3);
+            this.mBTNDiscover.Location = new System.Drawing.Point(3, 15);
             this.mBTNDiscover.Name = "mBTNDiscover";
             this.mBTNDiscover.Size = new System.Drawing.Size(111, 23);
             this.mBTNDiscover.TabIndex = 0;
@@ -366,7 +366,7 @@
             // 
             // mBTNAssignAddressRange
             // 
-            this.mBTNAssignAddressRange.Location = new System.Drawing.Point(3, 3);
+            this.mBTNAssignAddressRange.Location = new System.Drawing.Point(3, 30);
             this.mBTNAssignAddressRange.Name = "mBTNAssignAddressRange";
             this.mBTNAssignAddressRange.Size = new System.Drawing.Size(153, 23);
             this.mBTNAssignAddressRange.TabIndex = 3;
@@ -1210,9 +1210,9 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1008, 621);
+            this.ClientSize = new System.Drawing.Size(1008, 645);
             this.Controls.Add(this.tableLayoutPanel1);
-            this.MinimumSize = new System.Drawing.Size(997, 659);
+            this.MinimumSize = new System.Drawing.Size(997, 683);
             this.Name = "MainForm";
             this.Text = "iXnet Manager";
             this.tableLayoutPanel1.ResumeLayout(false);

@@ -139,6 +139,9 @@ namespace iXnetManager.Controls
         [DllImport("user32.dll")]
         private static extern int SendMessage(IntPtr hWnd, int msg, int wParam, int lParam);
 
+        [DllImport("user32.dll")]
+        private static extern bool PostMessage(IntPtr hWnd, int msg, int wParam, int lParam);
+
         private const int WM_NCLBUTTONDOWN = 0xA1;
         private const int HTCAPTION = 0x2;
 
@@ -168,8 +171,13 @@ namespace iXnetManager.Controls
             // PARENT FORM's caption, which makes the OS run its normal
             // native window-drag loop (also gets Aero Snap for free). This
             // is the standard, reliable technique for custom title bars.
+            // PostMessage (not SendMessage) so we don't block this control's
+            // message pump while the OS runs its native move loop - a
+            // synchronous SendMessage here re-entered our own WndProc mid
+            // mouse-down and produced a stale/duplicate "ghost" repaint of
+            // the title bar and list beneath it on some machines.
             ReleaseCapture();
-            SendMessage(_owner.Handle, WM_NCLBUTTONDOWN, HTCAPTION, 0);
+            PostMessage(_owner.Handle, WM_NCLBUTTONDOWN, HTCAPTION, 0);
         }
 
         protected override void OnMouseClick(MouseEventArgs e)
