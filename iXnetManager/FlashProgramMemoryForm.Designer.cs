@@ -221,13 +221,13 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(706, 398);
+            this.ClientSize = new System.Drawing.Size(706, 434);
             this.Controls.Add(this.tableLayoutPanel1);
-            this.MinimumSize = new System.Drawing.Size(722, 236);
+            this.MinimumSize = new System.Drawing.Size(722, 272);
             this.Name = "FlashProgramMemoryForm";
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
-            this.Text = "FlashProgramMemoryForm";
+            this.Text = "Flash Program Memory";
             this.tableLayoutPanel1.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();

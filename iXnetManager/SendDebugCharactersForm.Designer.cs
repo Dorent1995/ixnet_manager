@@ -32,7 +32,9 @@
             this.mTBDebugText = new System.Windows.Forms.TextBox();
             this.mBTNClose = new System.Windows.Forms.Button();
             this.mBTNSend = new System.Windows.Forms.Button();
-            this.mCBAppendNewline = new System.Windows.Forms.CheckBox();
+            this.mCBAppendNewline = new iXnetManager.Controls.ToggleSwitch();
+            this.mLBLAppendNewline = new System.Windows.Forms.Label();
+            this.mContentPanel = new System.Windows.Forms.Panel();
             this.SuspendLayout();
             // 
             // label1
@@ -74,15 +76,20 @@
             // 
             // mCBAppendNewline
             // 
-            this.mCBAppendNewline.AutoSize = true;
             this.mCBAppendNewline.Checked = true;
-            this.mCBAppendNewline.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.mCBAppendNewline.Location = new System.Drawing.Point(16, 53);
+            this.mCBAppendNewline.Location = new System.Drawing.Point(16, 51);
             this.mCBAppendNewline.Name = "mCBAppendNewline";
-            this.mCBAppendNewline.Size = new System.Drawing.Size(104, 17);
+            this.mCBAppendNewline.Size = new System.Drawing.Size(36, 20);
             this.mCBAppendNewline.TabIndex = 4;
-            this.mCBAppendNewline.Text = "Append Newline";
-            this.mCBAppendNewline.UseVisualStyleBackColor = true;
+            // 
+            // mLBLAppendNewline
+            // 
+            this.mLBLAppendNewline.AutoSize = true;
+            this.mLBLAppendNewline.Location = new System.Drawing.Point(58, 54);
+            this.mLBLAppendNewline.Name = "mLBLAppendNewline";
+            this.mLBLAppendNewline.Size = new System.Drawing.Size(94, 13);
+            this.mLBLAppendNewline.TabIndex = 5;
+            this.mLBLAppendNewline.Text = "Append Newline";
             // 
             // SendDebugCharactersForm
             // 
@@ -90,15 +97,22 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.mBTNClose;
-            this.ClientSize = new System.Drawing.Size(382, 84);
-            this.Controls.Add(this.mCBAppendNewline);
-            this.Controls.Add(this.mBTNSend);
-            this.Controls.Add(this.mBTNClose);
-            this.Controls.Add(this.mTBDebugText);
-            this.Controls.Add(this.label1);
+            this.ClientSize = new System.Drawing.Size(382, 120);
+            this.mContentPanel.Controls.Add(this.mLBLAppendNewline);
+            this.mContentPanel.Controls.Add(this.mCBAppendNewline);
+            this.mContentPanel.Controls.Add(this.mBTNSend);
+            this.mContentPanel.Controls.Add(this.mBTNClose);
+            this.mContentPanel.Controls.Add(this.mTBDebugText);
+            this.mContentPanel.Controls.Add(this.label1);
+            this.mContentPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.mContentPanel.Location = new System.Drawing.Point(0, 0);
+            this.mContentPanel.Name = "mContentPanel";
+            this.mContentPanel.Size = new System.Drawing.Size(382, 84);
+            this.mContentPanel.TabIndex = 0;
+            this.Controls.Add(this.mContentPanel);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Name = "SendDebugCharactersForm";
-            this.Text = "SendDebugCharactersForm";
+            this.Text = "Send Debug Characters";
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -110,6 +124,8 @@
         private System.Windows.Forms.TextBox mTBDebugText;
         private System.Windows.Forms.Button mBTNClose;
         private System.Windows.Forms.Button mBTNSend;
-        private System.Windows.Forms.CheckBox mCBAppendNewline;
+        private iXnetManager.Controls.ToggleSwitch mCBAppendNewline;
+        private System.Windows.Forms.Label mLBLAppendNewline;
+        private System.Windows.Forms.Panel mContentPanel;
     }
 }

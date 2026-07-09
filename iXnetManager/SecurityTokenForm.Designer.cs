@@ -32,6 +32,7 @@
             this.mTBPassword = new System.Windows.Forms.TextBox();
             this.mBTNOk = new System.Windows.Forms.Button();
             this.mBTNCancel = new System.Windows.Forms.Button();
+            this.mContentPanel = new System.Windows.Forms.Panel();
             this.SuspendLayout();
             // 
             // label1
@@ -77,11 +78,17 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.mBTNCancel;
-            this.ClientSize = new System.Drawing.Size(177, 82);
-            this.Controls.Add(this.mBTNCancel);
-            this.Controls.Add(this.mBTNOk);
-            this.Controls.Add(this.mTBPassword);
-            this.Controls.Add(this.label1);
+            this.ClientSize = new System.Drawing.Size(177, 118);
+            this.mContentPanel.Controls.Add(this.mBTNCancel);
+            this.mContentPanel.Controls.Add(this.mBTNOk);
+            this.mContentPanel.Controls.Add(this.mTBPassword);
+            this.mContentPanel.Controls.Add(this.label1);
+            this.mContentPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.mContentPanel.Location = new System.Drawing.Point(0, 0);
+            this.mContentPanel.Name = "mContentPanel";
+            this.mContentPanel.Size = new System.Drawing.Size(177, 82);
+            this.mContentPanel.TabIndex = 0;
+            this.Controls.Add(this.mContentPanel);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
@@ -99,5 +106,6 @@
         private System.Windows.Forms.TextBox mTBPassword;
         private System.Windows.Forms.Button mBTNOk;
         private System.Windows.Forms.Button mBTNCancel;
+        private System.Windows.Forms.Panel mContentPanel;
     }
 }

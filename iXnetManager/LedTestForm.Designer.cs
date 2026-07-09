@@ -36,6 +36,7 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.TouchCount = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.mContentPanel = new System.Windows.Forms.Panel();
             this.SuspendLayout();
             // 
             // listView1
@@ -116,12 +117,18 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(591, 681);
-            this.Controls.Add(this.label3);
-            this.Controls.Add(this.label2);
-            this.Controls.Add(this.button1);
-            this.Controls.Add(this.label1);
-            this.Controls.Add(this.listView1);
+            this.ClientSize = new System.Drawing.Size(591, 717);
+            this.mContentPanel.Controls.Add(this.label3);
+            this.mContentPanel.Controls.Add(this.label2);
+            this.mContentPanel.Controls.Add(this.button1);
+            this.mContentPanel.Controls.Add(this.label1);
+            this.mContentPanel.Controls.Add(this.listView1);
+            this.mContentPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.mContentPanel.Location = new System.Drawing.Point(0, 0);
+            this.mContentPanel.Name = "mContentPanel";
+            this.mContentPanel.Size = new System.Drawing.Size(591, 681);
+            this.mContentPanel.TabIndex = 0;
+            this.Controls.Add(this.mContentPanel);
             this.Name = "LedTestForm";
             this.Text = "Touchsensor Test";
             this.ResumeLayout(false);
@@ -139,5 +146,6 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.ColumnHeader TouchCount;
+        private System.Windows.Forms.Panel mContentPanel;
     }
 }

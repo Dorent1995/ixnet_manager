@@ -7,10 +7,12 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using iXnet.InputHub;
+using iXnetManager.Controls;
+using iXnetManager.Theme;
 
 namespace iXnetManager
 {
-    public partial class SendDebugCharactersForm : Form
+    public partial class SendDebugCharactersForm : BaseChromeForm
     {
         private CharacterDevice mCharDevice;
         public iXnet.InputHub.CharacterDevice CharDevice
@@ -21,6 +23,8 @@ namespace iXnetManager
         public SendDebugCharactersForm(CharacterDevice charDevice)
         {
             InitializeComponent();
+            InstallChrome(resizable: false, showMinimize: false, showMaximize: false, showThemeToggle: false);
+            ThemeApplier.Apply(this, mBTNSend);
 
             mCharDevice = charDevice;
 

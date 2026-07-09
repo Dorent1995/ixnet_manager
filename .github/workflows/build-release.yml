@@ -1,0 +1,66 @@
+name: Build Release and Installer
+
+on:
+  push:
+    branches: [ "design/macos-ui" ]
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup MSBuild
+        uses: microsoft/setup-msbuild@v2
+
+      - name: Build solution (Release)
+        shell: cmd
+        continue-on-error: true
+        run: msbuild iXnetManager.sln /p:Configuration=Release /p:Platform="Mixed Platforms" /m > build.log 2>&1
+
+      - name: Show build log tail
+        shell: bash
+        if: always()
+        run: tail -n 200 build.log || true
+
+      - name: Install Inno Setup
+        shell: cmd
+        continue-on-error: true
+        run: choco install innosetup -y --no-progress > choco.log 2>&1
+
+      - name: Build installer
+        shell: cmd
+        continue-on-error: true
+        working-directory: installer
+        run: '"C:\Program Files (x86)\Inno Setup 6\ISCC.exe" setup.iss > ../iscc.log 2>&1'
+
+      - name: Publish build output + logs to branch (always)
+        if: always()
+        shell: bash
+        run: |
+          mkdir -p /tmp/build-out
+          cp build.log /tmp/build-out/ 2>/dev/null || true
+          cp choco.log /tmp/build-out/ 2>/dev/null || true
+          cp iscc.log /tmp/build-out/ 2>/dev/null || true
+          cp iXnetManager/bin/Release/iXnetManager.exe /tmp/build-out/ 2>/dev/null || true
+          cp iXnetManager/bin/Release/iXnetManager.exe.config /tmp/build-out/ 2>/dev/null || true
+          cp iXnetManager/bin/Release/iXnet.dll /tmp/build-out/ 2>/dev/null || true
+          cp iXnetManager/bin/Release/ObjectListView.dll /tmp/build-out/ 2>/dev/null || true
+          cp installer/output/*.exe /tmp/build-out/ 2>/dev/null || true
+
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git checkout --orphan build-output/design-macos-ui
+          git rm -rf . > /dev/null 2>&1 || true
+          rm -rf ./* 2>/dev/null || true
+          cp /tmp/build-out/* . 2>/dev/null || true
+          echo "Automated build output. Source commit: ${GITHUB_SHA}" > BUILD_INFO.txt
+          git add -A
+          git commit -m "Automated build output for design/macos-ui (${GITHUB_SHA})" --allow-empty
+          git push -f origin HEAD:build-output/design-macos-ui

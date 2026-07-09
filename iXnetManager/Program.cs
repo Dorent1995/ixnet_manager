@@ -13,6 +13,11 @@ namespace iXnetManager
         [STAThread]
         static void Main()
         {
+            // DPI awareness is declared in app.manifest (dpiAware=true) -
+            // classic .NET Framework WinForms does not expose a callable
+            // Application.SetHighDpiMode API (that's a .NET Core/5+ WinForms
+            // addition); the manifest is the correct mechanism here.
+
             AppDomain.CurrentDomain.UnhandledException += (s, e) =>
             {
                 try

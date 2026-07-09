@@ -6,10 +6,12 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using iXnetManager.Controls;
+using iXnetManager.Theme;
 
 namespace iXnetManager
 {
-    public partial class SecurityTokenForm : Form
+    public partial class SecurityTokenForm : BaseChromeForm
     {
         public string Password
         {
@@ -22,6 +24,8 @@ namespace iXnetManager
         public SecurityTokenForm()
         {
             InitializeComponent();
+            InstallChrome(resizable: false, showMinimize: false, showMaximize: false, showThemeToggle: false);
+            ThemeApplier.Apply(this, mBTNOk);
         }
 
         private void mBTNOk_Click(object sender, EventArgs e)

@@ -54,7 +54,7 @@
             this.mTPLedControl = new System.Windows.Forms.TabPage();
             this.mTBBrightness = new System.Windows.Forms.TextBox();
             this.mCBLedColor = new System.Windows.Forms.ComboBox();
-            this.mTrackBrightness = new System.Windows.Forms.TrackBar();
+            this.mTrackBrightness = new iXnetManager.Controls.ModernSlider();
             this.label17 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
@@ -89,7 +89,8 @@
             this.label10 = new System.Windows.Forms.Label();
             this.mTPInputMonitor = new System.Windows.Forms.TabPage();
             this.mBTNDebugSend = new System.Windows.Forms.Button();
-            this.mCBActivateInput = new System.Windows.Forms.CheckBox();
+            this.mCBActivateInput = new iXnetManager.Controls.ToggleSwitch();
+            this.mLBLActivateInput = new System.Windows.Forms.Label();
             this.mCBInputSelect = new System.Windows.Forms.ComboBox();
             this.mTBReceivedInput = new System.Windows.Forms.TextBox();
             this.mTPErrorReporting = new System.Windows.Forms.TabPage();
@@ -134,7 +135,6 @@
             this.panel2.SuspendLayout();
             this.mFunctionTabs.SuspendLayout();
             this.mTPLedControl.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.mTrackBrightness)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.mTBLedID)).BeginInit();
             this.mTPStressTesting.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.mTBSendTimeout)).BeginInit();
@@ -164,7 +164,7 @@
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 3;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 60F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 84F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 217F));
             this.tableLayoutPanel1.Size = new System.Drawing.Size(1008, 585);
             this.tableLayoutPanel1.TabIndex = 0;
@@ -275,7 +275,7 @@
             // 
             // mBtnAddManually
             // 
-            this.mBtnAddManually.Location = new System.Drawing.Point(237, 28);
+            this.mBtnAddManually.Location = new System.Drawing.Point(237, 50);
             this.mBtnAddManually.Name = "mBtnAddManually";
             this.mBtnAddManually.Size = new System.Drawing.Size(111, 23);
             this.mBtnAddManually.TabIndex = 10;
@@ -285,7 +285,7 @@
             // 
             // mBTNFactoryReset
             // 
-            this.mBTNFactoryReset.Location = new System.Drawing.Point(471, 3);
+            this.mBTNFactoryReset.Location = new System.Drawing.Point(471, 15);
             this.mBTNFactoryReset.Name = "mBTNFactoryReset";
             this.mBTNFactoryReset.Size = new System.Drawing.Size(111, 23);
             this.mBTNFactoryReset.TabIndex = 7;
@@ -295,7 +295,7 @@
             // 
             // mBTNFlashLedModules
             // 
-            this.mBTNFlashLedModules.Location = new System.Drawing.Point(120, 28);
+            this.mBTNFlashLedModules.Location = new System.Drawing.Point(120, 50);
             this.mBTNFlashLedModules.Name = "mBTNFlashLedModules";
             this.mBTNFlashLedModules.Size = new System.Drawing.Size(111, 23);
             this.mBTNFlashLedModules.TabIndex = 6;
@@ -305,7 +305,7 @@
             // 
             // mBTNFlashDevices
             // 
-            this.mBTNFlashDevices.Location = new System.Drawing.Point(3, 28);
+            this.mBTNFlashDevices.Location = new System.Drawing.Point(3, 50);
             this.mBTNFlashDevices.Name = "mBTNFlashDevices";
             this.mBTNFlashDevices.Size = new System.Drawing.Size(111, 23);
             this.mBTNFlashDevices.TabIndex = 5;
@@ -316,7 +316,7 @@
             // mBTNDiscardChanges
             // 
             this.mBTNDiscardChanges.Enabled = false;
-            this.mBTNDiscardChanges.Location = new System.Drawing.Point(237, 3);
+            this.mBTNDiscardChanges.Location = new System.Drawing.Point(237, 15);
             this.mBTNDiscardChanges.Name = "mBTNDiscardChanges";
             this.mBTNDiscardChanges.Size = new System.Drawing.Size(111, 23);
             this.mBTNDiscardChanges.TabIndex = 2;
@@ -326,7 +326,7 @@
             // 
             // mBTNReset
             // 
-            this.mBTNReset.Location = new System.Drawing.Point(354, 3);
+            this.mBTNReset.Location = new System.Drawing.Point(354, 15);
             this.mBTNReset.Name = "mBTNReset";
             this.mBTNReset.Size = new System.Drawing.Size(111, 23);
             this.mBTNReset.TabIndex = 1;
@@ -337,7 +337,7 @@
             // mBTNApplyChanges
             // 
             this.mBTNApplyChanges.Enabled = false;
-            this.mBTNApplyChanges.Location = new System.Drawing.Point(120, 3);
+            this.mBTNApplyChanges.Location = new System.Drawing.Point(120, 15);
             this.mBTNApplyChanges.Name = "mBTNApplyChanges";
             this.mBTNApplyChanges.Size = new System.Drawing.Size(111, 23);
             this.mBTNApplyChanges.TabIndex = 1;
@@ -347,7 +347,7 @@
             // 
             // mBTNDiscover
             // 
-            this.mBTNDiscover.Location = new System.Drawing.Point(3, 3);
+            this.mBTNDiscover.Location = new System.Drawing.Point(3, 15);
             this.mBTNDiscover.Name = "mBTNDiscover";
             this.mBTNDiscover.Size = new System.Drawing.Size(111, 23);
             this.mBTNDiscover.TabIndex = 0;
@@ -366,7 +366,7 @@
             // 
             // mBTNAssignAddressRange
             // 
-            this.mBTNAssignAddressRange.Location = new System.Drawing.Point(3, 3);
+            this.mBTNAssignAddressRange.Location = new System.Drawing.Point(3, 30);
             this.mBTNAssignAddressRange.Name = "mBTNAssignAddressRange";
             this.mBTNAssignAddressRange.Size = new System.Drawing.Size(153, 23);
             this.mBTNAssignAddressRange.TabIndex = 3;
@@ -778,6 +778,7 @@
             this.mTPInputMonitor.BackColor = System.Drawing.SystemColors.Control;
             this.mTPInputMonitor.Controls.Add(this.mBTNDebugSend);
             this.mTPInputMonitor.Controls.Add(this.mCBActivateInput);
+            this.mTPInputMonitor.Controls.Add(this.mLBLActivateInput);
             this.mTPInputMonitor.Controls.Add(this.mCBInputSelect);
             this.mTPInputMonitor.Controls.Add(this.mTBReceivedInput);
             this.mTPInputMonitor.Location = new System.Drawing.Point(4, 22);
@@ -797,17 +798,21 @@
             this.mBTNDebugSend.UseVisualStyleBackColor = true;
             this.mBTNDebugSend.Click += new System.EventHandler(this.mBTNDebugSend_Click);
             // 
+            // mLBLActivateInput
+            // 
+            this.mLBLActivateInput.AutoSize = false;
+            this.mLBLActivateInput.Location = new System.Drawing.Point(6, 36);
+            this.mLBLActivateInput.Name = "mLBLActivateInput";
+            this.mLBLActivateInput.Size = new System.Drawing.Size(80, 15);
+            this.mLBLActivateInput.TabIndex = 20;
+            this.mLBLActivateInput.Text = "Activate Input";
+            // 
             // mCBActivateInput
             // 
-            this.mCBActivateInput.Appearance = System.Windows.Forms.Appearance.Button;
-            this.mCBActivateInput.AutoCheck = false;
-            this.mCBActivateInput.Location = new System.Drawing.Point(6, 33);
+            this.mCBActivateInput.Location = new System.Drawing.Point(90, 33);
             this.mCBActivateInput.Name = "mCBActivateInput";
-            this.mCBActivateInput.Size = new System.Drawing.Size(121, 23);
+            this.mCBActivateInput.Size = new System.Drawing.Size(36, 20);
             this.mCBActivateInput.TabIndex = 5;
-            this.mCBActivateInput.Text = "Activate Input";
-            this.mCBActivateInput.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.mCBActivateInput.UseVisualStyleBackColor = true;
             this.mCBActivateInput.Click += new System.EventHandler(this.mCBActivateInput_Click);
             // 
             // mCBInputSelect
@@ -1205,9 +1210,9 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1008, 585);
+            this.ClientSize = new System.Drawing.Size(1008, 645);
             this.Controls.Add(this.tableLayoutPanel1);
-            this.MinimumSize = new System.Drawing.Size(997, 623);
+            this.MinimumSize = new System.Drawing.Size(997, 683);
             this.Name = "MainForm";
             this.Text = "iXnet Manager";
             this.tableLayoutPanel1.ResumeLayout(false);
@@ -1217,7 +1222,6 @@
             this.mFunctionTabs.ResumeLayout(false);
             this.mTPLedControl.ResumeLayout(false);
             this.mTPLedControl.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.mTrackBrightness)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.mTBLedID)).EndInit();
             this.mTPStressTesting.ResumeLayout(false);
             this.mTPStressTesting.PerformLayout();
@@ -1288,7 +1292,8 @@
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.NumericUpDown mTBSendTimeout;
         private System.Windows.Forms.ComboBox mCBInputSelect;
-        private System.Windows.Forms.CheckBox mCBActivateInput;
+        private iXnetManager.Controls.ToggleSwitch mCBActivateInput;
+        private System.Windows.Forms.Label mLBLActivateInput;
         private System.Windows.Forms.Button mBTNFlashLedModules;
         private BrightIdeasSoftware.OLVColumn olvColumn6;
         private System.Windows.Forms.TabControl mFunctionTabs;
@@ -1326,7 +1331,7 @@
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.Button mBTNStopStressTesting;
         private System.Windows.Forms.Button mBTNSaveLog;
-        private System.Windows.Forms.TrackBar mTrackBrightness;
+        private iXnetManager.Controls.ModernSlider mTrackBrightness;
         private System.Windows.Forms.Label label17;
         private System.Windows.Forms.TextBox mTBBrightness;
         private System.Windows.Forms.TabPage mTPLog;

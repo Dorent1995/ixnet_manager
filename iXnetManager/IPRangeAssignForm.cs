@@ -8,10 +8,12 @@ using System.Text;
 using System.Windows.Forms;
 using System.Net;
 using iXnet.ControlPort;
+using iXnetManager.Controls;
+using iXnetManager.Theme;
 
 namespace iXnetManager
 {
-    partial class IPRangeAssignForm : Form
+    partial class IPRangeAssignForm : BaseChromeForm
     {
         private IEnumerable<NetDevice> mDevices;
         public IEnumerable<NetDevice> Devices
@@ -23,6 +25,8 @@ namespace iXnetManager
         public IPRangeAssignForm()
         {
             InitializeComponent();
+            InstallChrome(resizable: false, showMinimize: false, showMaximize: false, showThemeToggle: false);
+            ThemeApplier.Apply(this, mBTNAssign);
 
             mTBNetwork.TextChanged += new EventHandler(mTBNetwork_TextChanged);
             mTBStartIP.TextChanged += new EventHandler(mTBStartIP_TextChanged);

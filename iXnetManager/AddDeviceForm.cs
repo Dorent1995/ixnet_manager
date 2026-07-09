@@ -7,10 +7,12 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Net;
+using iXnetManager.Controls;
+using iXnetManager.Theme;
 
 namespace iXnetManager
 {
-    public partial class AddDeviceForm : Form
+    public partial class AddDeviceForm : BaseChromeForm
     {
         public IPAddress LocalAdapterIP { get; set; }
         public IPAddress RemoteAddress { get; set; }
@@ -21,6 +23,8 @@ namespace iXnetManager
             RemoteAddress = IPAddress.Broadcast;
 
             InitializeComponent();
+            InstallChrome(resizable: false, showMinimize: false, showMaximize: false, showThemeToggle: false);
+            ThemeApplier.Apply(this, mBtnSearch);
         }
 
         protected override void OnShown(EventArgs e)
