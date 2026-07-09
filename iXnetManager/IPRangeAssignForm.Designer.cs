@@ -39,6 +39,7 @@
             this.mBTNAssign = new System.Windows.Forms.Button();
             this.label4 = new System.Windows.Forms.Label();
             this.mTBGateway = new System.Windows.Forms.TextBox();
+            this.mContentPanel = new System.Windows.Forms.Panel();
             this.SuspendLayout();
             // 
             // label1
@@ -138,18 +139,24 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(196, 145);
-            this.Controls.Add(this.mTBGateway);
-            this.Controls.Add(this.label4);
-            this.Controls.Add(this.mBTNAssign);
-            this.Controls.Add(this.mTBEndIP);
-            this.Controls.Add(this.mTBEndIPMask);
-            this.Controls.Add(this.mTBStartIP);
-            this.Controls.Add(this.mTBStartIPMask);
-            this.Controls.Add(this.mTBNetwork);
-            this.Controls.Add(this.label3);
-            this.Controls.Add(this.label2);
-            this.Controls.Add(this.label1);
+            this.ClientSize = new System.Drawing.Size(196, 181);
+            this.mContentPanel.Controls.Add(this.mTBGateway);
+            this.mContentPanel.Controls.Add(this.label4);
+            this.mContentPanel.Controls.Add(this.mBTNAssign);
+            this.mContentPanel.Controls.Add(this.mTBEndIP);
+            this.mContentPanel.Controls.Add(this.mTBEndIPMask);
+            this.mContentPanel.Controls.Add(this.mTBStartIP);
+            this.mContentPanel.Controls.Add(this.mTBStartIPMask);
+            this.mContentPanel.Controls.Add(this.mTBNetwork);
+            this.mContentPanel.Controls.Add(this.label3);
+            this.mContentPanel.Controls.Add(this.label2);
+            this.mContentPanel.Controls.Add(this.label1);
+            this.mContentPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.mContentPanel.Location = new System.Drawing.Point(0, 0);
+            this.mContentPanel.Name = "mContentPanel";
+            this.mContentPanel.Size = new System.Drawing.Size(196, 145);
+            this.mContentPanel.TabIndex = 0;
+            this.Controls.Add(this.mContentPanel);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Name = "IPRangeAssignForm";
             this.ShowInTaskbar = false;
@@ -172,5 +179,6 @@
         private System.Windows.Forms.Button mBTNAssign;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.TextBox mTBGateway;
+        private System.Windows.Forms.Panel mContentPanel;
     }
 }

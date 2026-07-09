@@ -7,10 +7,12 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using iXnet.ControlPort;
+using iXnetManager.Controls;
+using iXnetManager.Theme;
 
 namespace iXnetManager
 {
-    internal partial class FlashLedModulesForm : Form
+    internal partial class FlashLedModulesForm : BaseChromeForm
     {
         private FwUpdateMode mLastUpdateMode = FwUpdateMode.Full;
 
@@ -30,6 +32,8 @@ namespace iXnetManager
 
             mNetDevice = netDevice;
             InitializeComponent();
+            InstallChrome(resizable: false, showMinimize: false, showMaximize: false, showThemeToggle: false);
+            ThemeApplier.Apply(this, mBTNStartUpdate);
 
             Text = String.Format("Update Led Modules on {0}", netDevice.SerialNumber);
         }

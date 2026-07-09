@@ -12,10 +12,12 @@ using iXnet.Bootloader;
 using System.IO;
 using System.Threading.Tasks;
 using System.Threading;
+using iXnetManager.Controls;
+using iXnetManager.Theme;
 
 namespace iXnetManager
 {
-    public partial class FlashProgramMemoryForm : Form
+    public partial class FlashProgramMemoryForm : BaseChromeForm
     {
         private CancellationTokenSource mCancelSource;
         private bool mRunning;
@@ -34,6 +36,8 @@ namespace iXnetManager
         public FlashProgramMemoryForm(IEnumerable<iXnetDevice> devices)
         {
             InitializeComponent();
+            InstallChrome(resizable: true, showMinimize: true, showMaximize: true);
+            ThemeApplier.Apply(this);
 
             BarRenderer render = new BarRenderer(0, 100);
             render.MaximumWidth = 10000;

@@ -62,6 +62,14 @@
       <DependentUpon>AddDeviceForm.cs</DependentUpon>
     </Compile>
     <Compile Include="ErrorObject.cs" />
+    <Compile Include="Theme\AppTheme.cs" />
+    <Compile Include="Theme\AppFonts.cs" />
+    <Compile Include="Controls\ToggleSwitch.cs" />
+    <Compile Include="Controls\ModernSlider.cs" />
+    <Compile Include="Controls\RoundedControls.cs" />
+    <Compile Include="Controls\MacTitleBar.cs" />
+    <Compile Include="Controls\BaseChromeForm.cs" />
+    <Compile Include="Controls\ThemeApplier.cs" />
     <Compile Include="FlashFirmwareState.cs" />
     <Compile Include="FlashLedModulesForm.cs">
       <SubType>Form</SubType>

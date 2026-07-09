@@ -35,6 +35,7 @@
             this.label2 = new System.Windows.Forms.Label();
             this.mLBLLedCount = new System.Windows.Forms.Label();
             this.mBTNClose = new System.Windows.Forms.Button();
+            this.mContentPanel = new System.Windows.Forms.Panel();
             this.SuspendLayout();
             // 
             // label1
@@ -111,14 +112,20 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.mBTNClose;
-            this.ClientSize = new System.Drawing.Size(282, 93);
-            this.Controls.Add(this.mBTNClose);
-            this.Controls.Add(this.mLBLLedCount);
-            this.Controls.Add(this.label2);
-            this.Controls.Add(this.mBTNStartUpdate);
-            this.Controls.Add(this.mRBIncremental);
-            this.Controls.Add(this.mRBFull);
-            this.Controls.Add(this.label1);
+            this.ClientSize = new System.Drawing.Size(282, 129);
+            this.mContentPanel.Controls.Add(this.mBTNClose);
+            this.mContentPanel.Controls.Add(this.mLBLLedCount);
+            this.mContentPanel.Controls.Add(this.label2);
+            this.mContentPanel.Controls.Add(this.mBTNStartUpdate);
+            this.mContentPanel.Controls.Add(this.mRBIncremental);
+            this.mContentPanel.Controls.Add(this.mRBFull);
+            this.mContentPanel.Controls.Add(this.label1);
+            this.mContentPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.mContentPanel.Location = new System.Drawing.Point(0, 0);
+            this.mContentPanel.Name = "mContentPanel";
+            this.mContentPanel.Size = new System.Drawing.Size(282, 93);
+            this.mContentPanel.TabIndex = 0;
+            this.Controls.Add(this.mContentPanel);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
@@ -139,5 +146,6 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label mLBLLedCount;
         private System.Windows.Forms.Button mBTNClose;
+        private System.Windows.Forms.Panel mContentPanel;
     }
 }

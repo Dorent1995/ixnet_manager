@@ -18,10 +18,12 @@ using System.IO;
 using iXnet.Bootloader;
 using System.Globalization;
 using BrightIdeasSoftware;
+using iXnetManager.Controls;
+using iXnetManager.Theme;
 
 namespace iXnetManager
 {
-    public partial class MainForm : Form
+    public partial class MainForm : BaseChromeForm
     {
         private IHubDevice mActiveInputDevice;
         private int mInputPort;
@@ -30,6 +32,8 @@ namespace iXnetManager
         public MainForm()
         {
             InitializeComponent();
+            InstallChrome(resizable: true, showMinimize: true, showMaximize: true);
+            ThemeApplier.Apply(this, mBTNApplyChanges, mBTNDiscover);
 
             Icon = Resources.ix_logo_ixnet;
 

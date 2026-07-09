@@ -33,6 +33,7 @@
             this.mBtnSearch = new System.Windows.Forms.Button();
             this.mTBLocalAdapter = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
+            this.mContentPanel = new System.Windows.Forms.Panel();
             this.SuspendLayout();
             // 
             // mTBIPAddress
@@ -82,12 +83,18 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(236, 95);
-            this.Controls.Add(this.label2);
-            this.Controls.Add(this.mTBLocalAdapter);
-            this.Controls.Add(this.mBtnSearch);
-            this.Controls.Add(this.label1);
-            this.Controls.Add(this.mTBIPAddress);
+            this.ClientSize = new System.Drawing.Size(236, 131);
+            this.mContentPanel.Controls.Add(this.label2);
+            this.mContentPanel.Controls.Add(this.mTBLocalAdapter);
+            this.mContentPanel.Controls.Add(this.mBtnSearch);
+            this.mContentPanel.Controls.Add(this.label1);
+            this.mContentPanel.Controls.Add(this.mTBIPAddress);
+            this.mContentPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.mContentPanel.Location = new System.Drawing.Point(0, 0);
+            this.mContentPanel.Name = "mContentPanel";
+            this.mContentPanel.Size = new System.Drawing.Size(236, 95);
+            this.mContentPanel.TabIndex = 0;
+            this.Controls.Add(this.mContentPanel);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Name = "AddDeviceForm";
             this.Text = "Add Device";
@@ -103,5 +110,6 @@
         private System.Windows.Forms.Button mBtnSearch;
         private System.Windows.Forms.TextBox mTBLocalAdapter;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Panel mContentPanel;
     }
 }
