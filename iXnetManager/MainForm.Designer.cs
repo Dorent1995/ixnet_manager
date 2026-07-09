@@ -66,6 +66,7 @@
             this.mTBLedText = new System.Windows.Forms.TextBox();
             this.mRBAllLeds = new System.Windows.Forms.RadioButton();
             this.mBTNClearAllLeds = new System.Windows.Forms.Button();
+            this.mBTNShowLedIds = new System.Windows.Forms.Button();
             this.mBTNSetLedColor = new System.Windows.Forms.Button();
             this.mBTNClearLed = new System.Windows.Forms.Button();
             this.mCBFlashMode = new System.Windows.Forms.ComboBox();
@@ -407,6 +408,7 @@
             this.mTPLedControl.Controls.Add(this.mTBLedText);
             this.mTPLedControl.Controls.Add(this.mRBAllLeds);
             this.mTPLedControl.Controls.Add(this.mBTNClearAllLeds);
+            this.mTPLedControl.Controls.Add(this.mBTNShowLedIds);
             this.mTPLedControl.Controls.Add(this.mBTNSetLedColor);
             this.mTPLedControl.Controls.Add(this.mBTNClearLed);
             this.mTPLedControl.Controls.Add(this.mCBFlashMode);
@@ -550,6 +552,16 @@
             this.mBTNClearAllLeds.Text = "Clear All";
             this.mBTNClearAllLeds.UseVisualStyleBackColor = true;
             this.mBTNClearAllLeds.Click += new System.EventHandler(this.mBTNClearAllLeds_Click);
+            //
+            // mBTNShowLedIds
+            //
+            this.mBTNShowLedIds.Location = new System.Drawing.Point(227, 6);
+            this.mBTNShowLedIds.Name = "mBTNShowLedIds";
+            this.mBTNShowLedIds.Size = new System.Drawing.Size(105, 23);
+            this.mBTNShowLedIds.TabIndex = 15;
+            this.mBTNShowLedIds.Text = "Show Led IDs";
+            this.mBTNShowLedIds.UseVisualStyleBackColor = true;
+            this.mBTNShowLedIds.Click += new System.EventHandler(this.mBTNShowLedIds_Click);
             // 
             // mBTNSetLedColor
             // 
@@ -1251,6 +1263,7 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox mTBLedText;
         private System.Windows.Forms.Button mBTNClearAllLeds;
+        private System.Windows.Forms.Button mBTNShowLedIds;
         private System.Windows.Forms.Button mBTNClearLed;
         private System.Windows.Forms.ComboBox mCBFlashMode;
         private System.Windows.Forms.ComboBox mCBLedColor;

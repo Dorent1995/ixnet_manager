@@ -582,6 +582,15 @@ namespace iXnetManager
                 mBTNClearAllLeds);
         }
 
+        void ShowLedIdsSelectedDevices()
+        {
+            ExecEveryDevice(dev => dev.ShowLedIds(),
+                "Failed to show led ids on following device(s):\n{0}",
+                "Show Led IDs",
+                true,
+                mBTNShowLedIds);
+        }
+
         void SetColorSelectedDevices()
         {
             int ledID;
@@ -1294,6 +1303,11 @@ namespace iXnetManager
         private void mBTNClearAllLeds_Click(object sender, EventArgs e)
         {
             ClearAllLedsSelectedDevices();
+        }
+
+        private void mBTNShowLedIds_Click(object sender, EventArgs e)
+        {
+            ShowLedIdsSelectedDevices();
         }
 
         private void mBTNSetLedColor_Click(object sender, EventArgs e)
