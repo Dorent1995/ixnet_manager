@@ -72,6 +72,25 @@ namespace iXnetManager.Controls
             _titleBar = new MacTitleBar(this, showMinimize, showMaximize, showThemeToggle);
             Controls.Add(_titleBar);
             _titleBar.BringToFront();
+
+            // The form's original content (a single Dock=Fill panel/table
+            // added during InitializeComponent) was already laid out to
+            // fill the ORIGINAL, smaller client area, before the title bar
+            // existed as a sibling. Adding the title bar afterwards does
+            // not reliably force that content to re-run its Dock=Fill
+            // calculation against the new sibling on every machine, which
+            // left its top rows hidden behind the title bar. Kick the Dock
+            // property to force a fresh layout pass now that both exist.
+            foreach (Control child in Controls)
+            {
+                if (child != _titleBar && child.Dock == DockStyle.Fill)
+                {
+                    child.Dock = DockStyle.None;
+                    child.Dock = DockStyle.Fill;
+                }
+            }
+
+            PerformLayout();
         }
 
         protected override void WndProc(ref Message m)
