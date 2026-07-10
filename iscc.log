@@ -1,0 +1,76 @@
+Inno Setup 6 Command-Line Compiler
+Copyright (C) 1997-2026 Jordan Russell. All rights reserved.
+Portions Copyright (C) 2000-2026 Martijn Laan. All rights reserved.
+Portions Copyright (C) 2001-2004 Alex Yackimoff. All rights reserved.
+https://www.innosetup.com
+
+Compiler engine version: Inno Setup 6.7.1
+Non-commercial use only
+
+Preprocessing
+   Reading file: C:\Program Files (x86)\Inno Setup 6\ISPPBuiltins.iss
+   Line 14: Warning: Function "ParseVersion" has been renamed. Use "GetVersionComponents" instead.
+   Line 58: Including file: D:\a\ixnet_manager\ixnet_manager\installer\netdetect.iss
+   Reading file: D:\a\ixnet_manager\ixnet_manager\installer\netdetect.iss
+   Line 59: Including file: D:\a\ixnet_manager\ixnet_manager\installer\firewall.iss
+   Reading file: D:\a\ixnet_manager\ixnet_manager\installer\firewall.iss
+Parsing [Setup] section, line 22
+Parsing [Setup] section, line 23
+Parsing [Setup] section, line 24
+Parsing [Setup] section, line 26
+Parsing [Setup] section, line 27
+Parsing [Setup] section, line 28
+Parsing [Setup] section, line 29
+Parsing [Setup] section, line 30
+Parsing [Setup] section, line 31
+Parsing [Setup] section, line 32
+Parsing [Setup] section, line 33
+Parsing [Setup] section, line 34
+Parsing [Setup] section, line 35
+Parsing [Setup] section, line 36
+Creating output directory: D:\a\ixnet_manager\ixnet_manager\installer\output
+Reading file (WizardImageFile)
+Reading file (WizardSmallImageFile)
+Preparing Setup program executable
+   Verification successful
+   Updating icons (Setup.e32)
+   Updating version info (Setup.e32)
+Determining language code pages
+Parsing [Languages] section, line 39
+   Reading file: C:\Program Files (x86)\Inno Setup 6\Default.isl
+Parsing [Languages] section, line 40
+   Reading file: C:\Program Files (x86)\Inno Setup 6\Languages\German.isl
+   Messages in script file
+Reading default messages from Default.isl
+Parsing [Languages] section, line 39
+   Reading file: C:\Program Files (x86)\Inno Setup 6\Default.isl
+Parsing [Languages] section, line 40
+   Reading file: C:\Program Files (x86)\Inno Setup 6\Languages\German.isl
+Parsing [LangOptions], [Messages], and [CustomMessages] sections
+   Messages in script file
+Reading [Code] section
+Parsing [Tasks] section, line 43
+Parsing [Icons] section, line 52
+Parsing [Icons] section, line 53
+Parsing [Run] section, line 56
+Parsing [Files] section, line 46
+Parsing [Files] section, line 47
+Parsing [Files] section, line 48
+Compiling [Code] section
+Creating setup files
+   Verification successful
+   Updating icons (Setup.exe)
+   Compressing: D:\a\ixnet_manager\ixnet_manager\installer\..\iXnetManager\bin\Release\iXnetManager.exe
+   Compressing: D:\a\ixnet_manager\ixnet_manager\installer\..\iXnetManager\bin\Release\iXnet.dll
+   Compressing: D:\a\ixnet_manager\ixnet_manager\installer\..\iXnetManager\bin\Release\ObjectListView.dll
+   Compressing Setup program executable
+   Updating version info (Setup.exe)
+   Updating manifest (Setup.exe)
+
+Warning: Constant "pf" has been renamed. Use "commonpf" instead or consider using its "auto" form.
+Warning: D:\a\ixnet_manager\ixnet_manager\installer\firewall.iss, Line 145, Column 13: [Hint] Support function "IsComponentSelected" has been renamed. Use "WizardIsComponentSelected" instead.
+Warning: Line 76, Column 5: [Hint] Variable 'APPPATH' never used
+Warning: Line 77, Column 5: [Hint] Variable 'APPEXE' never used
+
+Successful compile (1.172 sec). Resulting Setup program filename is:
+D:\a\ixnet_manager\ixnet_manager\installer\output\iXnetManager-2.6.0-setup.exe
