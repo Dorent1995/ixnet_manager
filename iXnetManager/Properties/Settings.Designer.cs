@@ -61,5 +61,17 @@ namespace iXnetManager.Properties {
                 this["LedMode"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool SkipFlashPassword {
+            get {
+                return ((bool)(this["SkipFlashPassword"]));
+            }
+            set {
+                this["SkipFlashPassword"] = value;
+            }
+        }
     }
 }

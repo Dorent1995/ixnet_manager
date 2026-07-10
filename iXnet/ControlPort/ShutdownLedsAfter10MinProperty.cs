@@ -10,6 +10,16 @@ namespace iXnet.ControlPort
     /// </summary>
     public class ShutdownLedsAfter10MinProperty : BoolProperty
     {
+        // Factory default: disabled. This only affects a freshly-constructed
+        // property instance before real device data has been read (e.g. the
+        // brief moment before GetProperties()/SetRawValue() populates the
+        // actual value) - once a device is queried, whatever the hardware
+        // reports takes over as usual.
+        public ShutdownLedsAfter10MinProperty()
+        {
+            TypedValue = false;
+        }
+
         public override int ID
         {
             get { return 0x1A; }

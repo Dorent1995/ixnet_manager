@@ -1,4 +1,4 @@
-﻿namespace iXnetManager
+namespace iXnetManager
 {
     partial class MainForm
     {
@@ -91,6 +91,8 @@
             this.mBTNDebugSend = new System.Windows.Forms.Button();
             this.mCBActivateInput = new iXnetManager.Controls.ToggleSwitch();
             this.mLBLActivateInput = new System.Windows.Forms.Label();
+            this.mCBSkipFlashPassword = new iXnetManager.Controls.ToggleSwitch();
+            this.mLBLSkipFlashPassword = new System.Windows.Forms.Label();
             this.mCBInputSelect = new System.Windows.Forms.ComboBox();
             this.mTBReceivedInput = new System.Windows.Forms.TextBox();
             this.mTPErrorReporting = new System.Windows.Forms.TabPage();
@@ -187,7 +189,7 @@
             this.olvColumn4,
             this.olvColumn5});
             this.mLBDevices.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.mLBDevices.EmptyListMsg = "No Devices Found";
+            this.mLBDevices.EmptyListMsg = "No Device Found please try add device instead";
             this.mLBDevices.FullRowSelect = true;
             this.mLBDevices.HideSelection = false;
             this.mLBDevices.Location = new System.Drawing.Point(3, 3);
@@ -1078,6 +1080,8 @@
             // 
             this.tabPage1.BackColor = System.Drawing.SystemColors.Control;
             this.tabPage1.Controls.Add(this.mTBInputPort);
+            this.tabPage1.Controls.Add(this.mCBSkipFlashPassword);
+            this.tabPage1.Controls.Add(this.mLBLSkipFlashPassword);
             this.tabPage1.Controls.Add(this.label18);
             this.tabPage1.Controls.Add(this.label16);
             this.tabPage1.Controls.Add(this.label15);
@@ -1180,6 +1184,23 @@
             this.label12.Size = new System.Drawing.Size(137, 13);
             this.label12.TabIndex = 0;
             this.label12.Text = "Network Message Timeout:";
+            // 
+            // mCBSkipFlashPassword
+            // 
+            this.mCBSkipFlashPassword.Location = new System.Drawing.Point(310, 12);
+            this.mCBSkipFlashPassword.Name = "mCBSkipFlashPassword";
+            this.mCBSkipFlashPassword.Size = new System.Drawing.Size(36, 20);
+            this.mCBSkipFlashPassword.TabIndex = 10;
+            this.mCBSkipFlashPassword.CheckedChanged += new System.EventHandler(this.mCBSkipFlashPassword_CheckedChanged);
+            // 
+            // mLBLSkipFlashPassword
+            // 
+            this.mLBLSkipFlashPassword.AutoSize = true;
+            this.mLBLSkipFlashPassword.Location = new System.Drawing.Point(352, 15);
+            this.mLBLSkipFlashPassword.Name = "mLBLSkipFlashPassword";
+            this.mLBLSkipFlashPassword.Size = new System.Drawing.Size(220, 13);
+            this.mLBLSkipFlashPassword.TabIndex = 11;
+            this.mLBLSkipFlashPassword.Text = "Disable password prompt for LED flash";
             // 
             // timer1
             // 
@@ -1294,6 +1315,8 @@
         private System.Windows.Forms.ComboBox mCBInputSelect;
         private iXnetManager.Controls.ToggleSwitch mCBActivateInput;
         private System.Windows.Forms.Label mLBLActivateInput;
+        private iXnetManager.Controls.ToggleSwitch mCBSkipFlashPassword;
+        private System.Windows.Forms.Label mLBLSkipFlashPassword;
         private System.Windows.Forms.Button mBTNFlashLedModules;
         private BrightIdeasSoftware.OLVColumn olvColumn6;
         private System.Windows.Forms.TabControl mFunctionTabs;

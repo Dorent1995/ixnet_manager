@@ -248,6 +248,7 @@ namespace iXnetManager.Controls
             bool selected = tab.SelectedIndex == e.Index;
 
             e.Graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
+            e.Graphics.TextRenderingHint = System.Drawing.Text.TextRenderingHint.ClearTypeGridFit;
 
             using (SolidBrush backBrush = new SolidBrush(selected ? p.TabSelectedBackground : p.WindowBackground))
                 e.Graphics.FillRectangle(backBrush, bounds);

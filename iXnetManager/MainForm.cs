@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -186,6 +186,14 @@ namespace iXnetManager
             mTBGlobalRetryDelay.Validated += new EventHandler(mTBGlobalRetryDelay_Validated);
 
             mTBInputPort.Text = mInputPort.ToString();
+
+            mCBSkipFlashPassword.Checked = Properties.Settings.Default.SkipFlashPassword;
+        }
+
+        private void mCBSkipFlashPassword_CheckedChanged(object sender, EventArgs e)
+        {
+            Properties.Settings.Default.SkipFlashPassword = mCBSkipFlashPassword.Checked;
+            Properties.Settings.Default.Save();
         }
 
         void mTBGlobalRetryDelay_Validated(object sender, EventArgs e)
@@ -261,6 +269,7 @@ namespace iXnetManager
         {
             e.DrawBackground();
             Graphics g = e.Graphics;
+            g.TextRenderingHint = System.Drawing.Text.TextRenderingHint.ClearTypeGridFit;
             Rectangle rect = e.Bounds;
             if (e.Index >= 0)
             {
@@ -646,7 +655,8 @@ namespace iXnetManager
         {
             using (var newDeviceForm = new AddDeviceForm())
             {
-                var result = newDeviceForm.ShowDialog();
+                newDeviceForm.StartPosition = FormStartPosition.CenterParent;
+                var result = newDeviceForm.ShowDialog(this);
                 if (result != DialogResult.OK)
                     return;
 
@@ -1344,6 +1354,12 @@ namespace iXnetManager
 
         private void mBTNFlashLedModules_Click(object sender, EventArgs e)
         {
+            if (Properties.Settings.Default.SkipFlashPassword)
+            {
+                FlashLedModules();
+                return;
+            }
+
             using (SecurityTokenForm passwordForm = new SecurityTokenForm())
             {
                 if (passwordForm.ShowDialog() == DialogResult.OK)

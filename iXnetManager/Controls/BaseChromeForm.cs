@@ -31,6 +31,10 @@ namespace iXnetManager.Controls
         private const int HTBOTTOMLEFT = 16;
         private const int HTBOTTOMRIGHT = 17;
 
+        private const int WS_MINIMIZEBOX = 0x00020000;
+        private const int WS_MAXIMIZEBOX = 0x00010000;
+        private const int WS_THICKFRAME = 0x00040000;
+
         private MacTitleBar _titleBar;
         private Control _content;
         private bool _resizable = true;
@@ -50,6 +54,28 @@ namespace iXnetManager.Controls
         {
             BackColor = ThemeManager.Current.CardBorder;
             Invalidate(true);
+        }
+
+        // FormBorderStyle.None strips WS_THICKFRAME from the native window
+        // style entirely. Our own WM_NCHITTEST override still lets the user
+        // drag-resize the edges, but without WS_THICKFRAME Windows no longer
+        // treats the window as "resizable" at the OS level, which silently
+        // disables Aero Snap (drag-to-edge docking, Win+Arrow). Adding the
+        // style bit back (without WS_CAPTION, so the native title bar stays
+        // gone) restores Snap while keeping the custom chrome.
+        protected override CreateParams CreateParams
+        {
+            get
+            {
+                CreateParams cp = base.CreateParams;
+                if (_resizable)
+                    cp.Style |= WS_THICKFRAME;
+                if (MinimizeBox)
+                    cp.Style |= WS_MINIMIZEBOX;
+                if (MaximizeBox)
+                    cp.Style |= WS_MAXIMIZEBOX;
+                return cp;
+            }
         }
 
         /// <summary>
