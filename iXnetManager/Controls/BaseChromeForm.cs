@@ -128,6 +128,17 @@ namespace iXnetManager.Controls
             LayoutChrome();
         }
 
+        /// <summary>
+        /// Adds the "toggle side panel" icon to the title bar (only forms
+        /// with a collapsible panel - currently just MainForm - call this,
+        /// after InstallChrome).
+        /// </summary>
+        protected void EnableSidebarToggle(Action onToggle, Func<bool> isExpanded)
+        {
+            if (_titleBar != null)
+                _titleBar.EnableSidebarToggle(onToggle, isExpanded);
+        }
+
         private void LayoutChrome()
         {
             if (_titleBar == null)

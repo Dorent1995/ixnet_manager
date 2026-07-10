@@ -36,6 +36,9 @@ namespace iXnetManager.Controls
 
         private int _hoverButtonIndex = -1;
         private bool _themeHover;
+        private bool _sidebarHover;
+        private Action _onSidebarToggle;
+        private Func<bool> _isSidebarExpanded;
         private readonly EventHandler _themeChangedHandler;
 
         public MacTitleBar(Form owner, bool showMinimize, bool showMaximize, bool showThemeToggle)
@@ -45,11 +48,12 @@ namespace iXnetManager.Controls
             _showMaximize = showMaximize;
             _showThemeToggle = showThemeToggle;
 
-            _buttons = new List<CaptionButtonKind> { CaptionButtonKind.Close };
+            _buttons = new List<CaptionButtonKind>();
             if (_showMinimize)
                 _buttons.Add(CaptionButtonKind.Minimize);
             if (_showMaximize)
                 _buttons.Add(CaptionButtonKind.Maximize);
+            _buttons.Add(CaptionButtonKind.Close);
 
             SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.UserPaint |
                       ControlStyles.OptimizedDoubleBuffer | ControlStyles.ResizeRedraw, true);
@@ -73,22 +77,55 @@ namespace iXnetManager.Controls
             base.Dispose(disposing);
         }
 
+        /// <summary>
+        /// Adds a small "toggle side panel" icon button, positioned just
+        /// left of the close/minimize/maximize cluster. Only forms that
+        /// have such a panel (currently just MainForm's Properties grid)
+        /// call this; other forms simply never show it.
+        /// </summary>
+        public void EnableSidebarToggle(Action onToggle, Func<bool> isExpanded)
+        {
+            _onSidebarToggle = onToggle;
+            _isSidebarExpanded = isExpanded;
+            Invalidate();
+        }
+
+        // Window-control buttons live on the RIGHT (standard Windows
+        // convention - minimize, maximize, close from left to right within
+        // the cluster, close outermost/closest to the screen edge), so the
+        // cluster is anchored from the right edge of the title bar.
         private Rectangle ButtonRect(int visibleIndex)
         {
-            return new Rectangle(visibleIndex * ButtonWidth, 0, ButtonWidth, Height);
+            int x = Width - (_buttons.Count - visibleIndex) * ButtonWidth;
+            return new Rectangle(x, 0, ButtonWidth, Height);
         }
 
         private Rectangle ButtonClusterRect()
         {
-            return new Rectangle(0, 0, _buttons.Count * ButtonWidth, Height);
+            int width = _buttons.Count * ButtonWidth;
+            return new Rectangle(Width - width, 0, width, Height);
         }
 
         private Rectangle ThemeToggleRect()
         {
             int size = 20;
-            int x = Width - size - 12;
+            int x = 12;
             int y = (Height - size) / 2;
             return new Rectangle(x, y, size, size);
+        }
+
+        private Rectangle SidebarToggleRect()
+        {
+            int width = 28;
+            int height = 20;
+            int x = ButtonClusterRect().Left - 8 - width;
+            int y = (Height - height) / 2;
+            return new Rectangle(x, y, width, height);
+        }
+
+        private bool ShowSidebarToggle
+        {
+            get { return _onSidebarToggle != null; }
         }
 
         /// <summary>True when the given (control-relative) point is over an
@@ -100,6 +137,9 @@ namespace iXnetManager.Controls
                 return true;
 
             if (_showThemeToggle && ThemeToggleRect().Contains(clientPoint))
+                return true;
+
+            if (ShowSidebarToggle && SidebarToggleRect().Contains(clientPoint))
                 return true;
 
             return false;
@@ -121,7 +161,10 @@ namespace iXnetManager.Controls
 
             _themeHover = _showThemeToggle && ThemeToggleRect().Contains(e.Location);
 
-            if (prevButton != _hoverButtonIndex || wasThemeHover != _themeHover)
+            bool wasSidebarHover = _sidebarHover;
+            _sidebarHover = ShowSidebarToggle && SidebarToggleRect().Contains(e.Location);
+
+            if (prevButton != _hoverButtonIndex || wasThemeHover != _themeHover || wasSidebarHover != _sidebarHover)
                 Invalidate();
         }
 
@@ -130,6 +173,7 @@ namespace iXnetManager.Controls
             base.OnMouseLeave(e);
             _hoverButtonIndex = -1;
             _themeHover = false;
+            _sidebarHover = false;
             Invalidate();
         }
 
@@ -210,7 +254,13 @@ namespace iXnetManager.Controls
             }
 
             if (_showThemeToggle && ThemeToggleRect().Contains(e.Location))
+            {
                 ThemeManager.Toggle();
+                return;
+            }
+
+            if (ShowSidebarToggle && SidebarToggleRect().Contains(e.Location))
+                _onSidebarToggle();
         }
 
         protected override void OnPaint(PaintEventArgs e)
@@ -232,6 +282,9 @@ namespace iXnetManager.Controls
 
             if (_showThemeToggle)
                 PaintThemeToggle(g, palette);
+
+            if (ShowSidebarToggle)
+                PaintSidebarToggle(g, palette);
 
             PaintTitle(g, palette);
         }
@@ -313,6 +366,44 @@ namespace iXnetManager.Controls
             }
         }
 
+        private void PaintSidebarToggle(Graphics g, ThemePalette palette)
+        {
+            Rectangle rect = SidebarToggleRect();
+
+            if (_sidebarHover)
+            {
+                using (SolidBrush hoverBrush = new SolidBrush(Color.FromArgb(28, palette.TextPrimary)))
+                using (GraphicsPath path = RoundedControls.RoundedRectPath(rect, 5))
+                    g.FillPath(hoverBrush, path);
+            }
+
+            // Classic "toggle side panel" glyph: an outlined rectangle with
+            // a vertical divider near the right third, that third shaded to
+            // read as the collapsible panel.
+            int iconW = 16;
+            int iconH = 12;
+            int ix = rect.X + (rect.Width - iconW) / 2;
+            int iy = rect.Y + (rect.Height - iconH) / 2;
+            Rectangle iconRect = new Rectangle(ix, iy, iconW, iconH);
+            int dividerX = iconRect.Right - 5;
+
+            Color lineColor = _sidebarHover ? palette.TextPrimary : palette.TextSecondary;
+
+            bool expanded = _isSidebarExpanded == null || _isSidebarExpanded();
+            if (expanded)
+            {
+                Rectangle panelRect = new Rectangle(dividerX, iconRect.Y + 1, iconRect.Right - dividerX - 1, iconRect.Height - 2);
+                using (SolidBrush panelBrush = new SolidBrush(Color.FromArgb(90, lineColor)))
+                    g.FillRectangle(panelBrush, panelRect);
+            }
+
+            using (Pen pen = new Pen(lineColor, 1.2f))
+            {
+                g.DrawRectangle(pen, iconRect);
+                g.DrawLine(pen, dividerX, iconRect.Y, dividerX, iconRect.Bottom);
+            }
+        }
+
         private void PaintTitle(Graphics g, ThemePalette palette)
         {
             string title = _owner.Text;
@@ -323,8 +414,9 @@ namespace iXnetManager.Controls
             {
                 SizeF textSize = g.MeasureString(title, titleFont);
 
-                int leftReserved = ButtonClusterRect().Right + 10;
-                int rightReserved = _showThemeToggle ? Width - ThemeToggleRect().Left + 8 : 8;
+                int leftReserved = _showThemeToggle ? ThemeToggleRect().Right + 8 : 8;
+                int rightBoundary = ShowSidebarToggle ? SidebarToggleRect().Left : ButtonClusterRect().Left;
+                int rightReserved = Width - rightBoundary + 10;
 
                 float x = (Width - textSize.Width) / 2f;
                 if (x < leftReserved)

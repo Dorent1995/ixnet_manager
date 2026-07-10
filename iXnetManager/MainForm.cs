@@ -28,12 +28,17 @@ namespace iXnetManager
         private IHubDevice mActiveInputDevice;
         private int mInputPort;
 
+        private float mPropertiesColumnWidth;
+        private bool mPropertiesPanelVisible = true;
 
         public MainForm()
         {
             InitializeComponent();
             InstallChrome(resizable: true, showMinimize: true, showMaximize: true);
             ThemeApplier.Apply(this);
+            EnableSidebarToggle(TogglePropertiesPanel, () => mPropertiesPanelVisible);
+
+            mPropertiesColumnWidth = tableLayoutPanel1.ColumnStyles[1].Width;
 
             Icon = Resources.ix_logo_ixnet;
 
@@ -658,6 +663,16 @@ namespace iXnetManager
         void SyncBrightness()
         {
             mTBBrightness.Text = mTrackBrightness.Value.ToString();
+        }
+
+        void TogglePropertiesPanel()
+        {
+            mPropertiesPanelVisible = !mPropertiesPanelVisible;
+
+            tableLayoutPanel1.ColumnStyles[1].Width = mPropertiesPanelVisible ? mPropertiesColumnWidth : 0F;
+            mPGDevices.Visible = mPropertiesPanelVisible;
+            panel2.Visible = mPropertiesPanelVisible;
+            tableLayoutPanel1.PerformLayout();
         }
 
         void AddDeviceManually()
