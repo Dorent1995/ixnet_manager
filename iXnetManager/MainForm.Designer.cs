@@ -1191,6 +1191,7 @@ namespace iXnetManager
             this.mCBSkipFlashPassword.Name = "mCBSkipFlashPassword";
             this.mCBSkipFlashPassword.Size = new System.Drawing.Size(36, 20);
             this.mCBSkipFlashPassword.TabIndex = 10;
+            this.mCBSkipFlashPassword.Click += new System.EventHandler(this.mCBSkipFlashPassword_Click);
             this.mCBSkipFlashPassword.CheckedChanged += new System.EventHandler(this.mCBSkipFlashPassword_CheckedChanged);
             // 
             // mLBLSkipFlashPassword

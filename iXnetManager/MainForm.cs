@@ -190,6 +190,15 @@ namespace iXnetManager
             mCBSkipFlashPassword.Checked = Properties.Settings.Default.SkipFlashPassword;
         }
 
+        private void mCBSkipFlashPassword_Click(object sender, EventArgs e)
+        {
+            // ToggleSwitch mirrors a CheckBox with AutoCheck = false - it
+            // never flips its own Checked state on click, the owner has to
+            // do it. There's no async/success-dependent action here (unlike
+            // mCBActivateInput), so just flip it immediately.
+            mCBSkipFlashPassword.Checked = !mCBSkipFlashPassword.Checked;
+        }
+
         private void mCBSkipFlashPassword_CheckedChanged(object sender, EventArgs e)
         {
             Properties.Settings.Default.SkipFlashPassword = mCBSkipFlashPassword.Checked;
